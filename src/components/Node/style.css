@@ -1,0 +1,82 @@
+.box {
+}
+
+.node {
+  fill: #dfdfdf;
+}
+
+.title {
+  fill: #388e3c;
+}
+
+.border {
+  fill: rgba(215, 215, 215, .12);
+  stroke: #fff;
+  stroke-width: .1;
+}
+
+.indicator {
+  fill: transparent;
+  stroke-width: .1;
+  cursor: move;
+}
+
+.box:hover .indicator {
+  stroke: rgba(28, 115, 187, .4);
+}
+
+.box:active .indicator {
+  stroke: rgb(28, 115, 187);
+}
+
+.box:active .border {
+  fill: transparent;
+}
+
+.title-text {
+  fill: #fff;
+  font-size: .55px;
+  text-anchor: middle;
+}
+
+.port {
+  fill: rgba(255,255,255,.7);
+  stroke: rgba(0,0,0,.4);
+  stroke-width: .05;
+}
+.in-port {
+  fill: #1976d2;
+}
+.out-port {
+  fill: #d32f2f;
+}
+
+.port-text {
+  fill: #333;
+  font-size: .5px;
+  text-anchor: middle;
+}
+.port-text.in-port {
+  text-anchor: start;
+}
+.port-text.out-port {
+  text-anchor: end;
+}
+
+.split {
+  fill: #999;
+}
+
+.input .title {
+  fill: #d32f2f;
+}
+.input .title-text {
+  text-anchor: end;
+}
+
+.output .title {
+  fill: #1976d2;
+}
+.output .title-text {
+  text-anchor: start;
+}

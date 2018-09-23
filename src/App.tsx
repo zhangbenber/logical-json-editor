@@ -1,20 +1,63 @@
 import * as React from 'react';
-import './App.css';
+import * as I from './typings';
 
-import logo from './logo.svg';
+import Graph from './components/Graph';
+
+const graph: I.Graph = {
+  nodes: [
+    {
+      id: 0,
+      name: 'in',
+      type: I.NodeType.INPUT,
+      x: 5,
+      y: 5,
+      width: 4,
+    },
+    {
+      id: 1,
+      name: 'logic',
+      type: I.NodeType.LOGICAL,
+      inputs: [{
+        name: 'input 1',
+        direction: I.PortDirection.IN,
+      }, {
+        name: 'input 2',
+        direction: I.PortDirection.IN,
+      }],
+      outputs: [{
+        name: 'output',
+        direction: I.PortDirection.OUT,
+      }],
+      x: 6,
+      y: 10,
+      width: 5,
+    },
+    {
+      id: 2,
+      name: 'out 中文',
+      type: I.NodeType.OUTPUT,
+      x: 13,
+      y: 11,
+      width: 4,
+    },
+  ],
+  links: [],
+}
+
+const dimension: I.Dimension = {
+  oX: 0,
+  oY: 0,
+  scale: 25,
+}
 
 class App extends React.Component {
   public render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.tsx</code> and save to reload.
-        </p>
-      </div>
+      <Graph
+        graph={graph}
+        dimension={dimension}
+        className="app"
+      />
     );
   }
 }

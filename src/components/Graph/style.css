@@ -1,0 +1,19 @@
+.box {
+  /* position: relative; */
+}
+
+.view {
+  background: #aaa;
+}
+
+.grid {
+  stroke: #888;
+  stroke-width: .02;
+  fill: transparent;
+}
+
+.node {
+  stroke: #fff;
+  stroke-width: .1;
+  fill: #388e3c;
+}

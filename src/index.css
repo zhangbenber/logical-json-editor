@@ -1,5 +1,14 @@
-body {
+:global(body) {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  height: 100%;
+  overflow: hidden;
+}
+
+:global(.app) {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
 }
