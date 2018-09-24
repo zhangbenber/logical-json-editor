@@ -1,6 +1,10 @@
 .box {
 }
 
+.box text {
+  user-select: none;
+}
+
 .node {
   fill: #dfdfdf;
 }
@@ -17,7 +21,7 @@
 
 .indicator {
   fill: transparent;
-  stroke-width: .1;
+  stroke-width: .15;
   cursor: move;
 }
 

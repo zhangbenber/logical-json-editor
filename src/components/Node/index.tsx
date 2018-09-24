@@ -9,9 +9,8 @@ export default class Node extends React.PureComponent<{
 }> {
   public render() {
     const { node } = this.props;
-    const { width } = node;
-    const ports = [...node.inputs || [], ...node.outputs || []];
-    const height = ports.length + 1;
+    const { width, ports, collapsed } = node;
+    const height = collapsed ? 1 : (ports.length + 1);
     return (
       <g
         transform={`translate(${node.x},${node.y})`}
@@ -60,7 +59,7 @@ export default class Node extends React.PureComponent<{
           />
         : null}
 
-        {ports.map((port, i) => {
+        {(collapsed ? [] : ports).map((port, i) => {
           const dir = {
             [I.PortDirection.IN]: 0,
             [I.PortDirection.OUT]: 1,
@@ -88,7 +87,7 @@ export default class Node extends React.PureComponent<{
         })}
 
         <rect
-          x="-.15" y="-.15" rx=".17" ry=".17" width={node.width + .3} height={height + .3}
+          x="-.2" y="-.2" rx=".2" ry=".2" width={node.width + .4} height={height + .4}
           className={styles.indicator}
         />
 

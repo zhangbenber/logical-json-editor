@@ -17,7 +17,7 @@ export interface Graph {
 export interface Port {
   name: string;
   direction: PortDirection;
-  node?: Node;
+  node: Node;
 }
 
 export interface Node {
@@ -27,27 +27,16 @@ export interface Node {
   x: number;
   y: number;
   width: number;
-  inputs?: Port[];
-  outputs?: Port[];
-}
-
-export interface InputNode extends Node {
-  type: NodeType.INPUT;
-}
-
-export interface OutputNode extends Node {
-  type: NodeType.OUTPUT;
-}
-
-export interface LogicalNode extends Node {
-  type: NodeType.LOGICAL;
-  inputs: Port[];
-  outputs: Port[];
+  ports: Port[];
+  collapsed: boolean;
+  selected: boolean;
 }
 
 export interface Link {
+  id: number;
   from: Port;
   to: Port;
+  selected: boolean;
 }
 
 export interface Dimension {

@@ -1,48 +1,29 @@
 import * as React from 'react';
 import * as I from './typings';
 
-import Graph from './components/Graph';
+import GraphView from './components/Graph';
+import Graph from './models/Graph';
 
-const graph: I.Graph = {
-  nodes: [
-    {
-      id: 0,
-      name: 'in',
-      type: I.NodeType.INPUT,
-      x: 5,
-      y: 5,
-      width: 4,
-    },
-    {
-      id: 1,
-      name: 'logic',
-      type: I.NodeType.LOGICAL,
-      inputs: [{
-        name: 'input 1',
-        direction: I.PortDirection.IN,
-      }, {
-        name: 'input 2',
-        direction: I.PortDirection.IN,
-      }],
-      outputs: [{
-        name: 'output',
-        direction: I.PortDirection.OUT,
-      }],
-      x: 6,
-      y: 10,
-      width: 5,
-    },
-    {
-      id: 2,
-      name: 'out 中文',
-      type: I.NodeType.OUTPUT,
-      x: 13,
-      y: 11,
-      width: 4,
-    },
-  ],
-  links: [],
-}
+import InputNode from './models/InputNode';
+import LogicalNode from './models/LogicalNode';
+import OutputNode from './models/OutputNode';
+
+import Link from './models/Link';
+
+const graph = new Graph();
+
+const input = graph.addNode(new InputNode('input')) as InputNode;
+const output = graph.addNode(new OutputNode('output')) as OutputNode;
+const logical = graph.addNode(new LogicalNode('logical')) as LogicalNode;
+
+input.moveTo(8, 4, 4);
+output.moveTo(12, 8, 5);
+logical.moveTo(3, 7);
+
+graph.addLink(new Link(input.getPort(), logical.ports[0]));
+graph.addLink(new Link(logical.ports[1], output.getPort()));
+
+console.log(graph)
 
 const dimension: I.Dimension = {
   oX: 0,
@@ -53,7 +34,7 @@ const dimension: I.Dimension = {
 class App extends React.Component {
   public render() {
     return (
-      <Graph
+      <GraphView
         graph={graph}
         dimension={dimension}
         className="app"

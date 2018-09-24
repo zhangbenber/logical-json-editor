@@ -4,6 +4,7 @@ import * as I from '../../typings';
 import classnames from 'classnames';
 import * as styles from './style.css';
 
+import Link from '../Link';
 import Node from '../Node';
 
 export default class Graph extends React.PureComponent<{
@@ -43,7 +44,7 @@ export default class Graph extends React.PureComponent<{
             fill="url(#grid)"
           />
           {nodes.map(node => <Node node={node} key={node.id} />)}
-          {links.map(link => this.drawLink(link))}
+          {links.map(link => <Link link={link} key={link.id} />)}
         </svg>
       </div>
     );
@@ -85,10 +86,6 @@ export default class Graph extends React.PureComponent<{
     } ${
       (height - dimension.oY) / dimension.scale
     }`
-  }
-
-  private drawLink(link: I.Link) {
-    return null;
   }
 
 }
