@@ -29,11 +29,11 @@
   stroke: rgba(28, 115, 187, .4);
 }
 
-.box:active .indicator, .box.selected .indicator {
+.box.selected .indicator {
   stroke: rgb(28, 115, 187);
 }
 
-.box:active .border {
+.box.selected .border {
   fill: transparent;
 }
 

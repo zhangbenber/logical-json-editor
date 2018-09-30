@@ -7,10 +7,14 @@ import * as styles from './style.css';
 import Link from '../Link';
 import Node from '../Node';
 
+import produce from 'immer';
+import reducersOf from '../../reducers';
+
 export default class Graph extends React.PureComponent<{
   graph: I.Graph,
   dimension: I.Dimension,
   className?: any,
+  onEdit?: (reducer: ((oldState: I.Graph) => I.Graph)) => void;
 }, {
   width: number,
   height: number,
@@ -25,6 +29,7 @@ export default class Graph extends React.PureComponent<{
   constructor(props: any) {
     super(props);
     this.handleSelectNode = this.handleSelectNode.bind(this);
+    this.handleDeselectAll = this.handleDeselectAll.bind(this);
   }
 
   public render() {
@@ -38,8 +43,9 @@ export default class Graph extends React.PureComponent<{
           className={styles.view}
           width={this.state.width}
           height={this.state.height}
-          viewBox={this.calcViewBox()
-        }>
+          viewBox={this.calcViewBox()}
+          onMouseDown={this.handleDeselectAll}
+        >
           {this.renderDefs()}
           <rect
             x="-100"
@@ -50,6 +56,7 @@ export default class Graph extends React.PureComponent<{
           />
           {nodes.map((node, id) => 
             node ? <Node
+              id={id}
               node={node}
               key={id}
               onSelect={this.handleSelectNode}
@@ -105,16 +112,20 @@ export default class Graph extends React.PureComponent<{
     }`
   }
 
-  private deselectAll() {
-    // this.props.graph.nodes.forEach(node => node.selected = false);
-    this.props.graph.links.forEach(link => link.selected = false);
+  private handleDeselectAll() {
+    this.apply(state => { reducersOf(state).deselectAll(); })
   }
 
-  private handleSelectNode(node: I.Node, preserve: boolean) {
-    if (!preserve) {
-      this.deselectAll();
+  private handleSelectNode(id: number, preserve: boolean) {
+    this.apply(state => { reducersOf(state).selectNode(id, preserve); })
+  }
+
+  private apply(producer: (oldState: I.Graph) => any) {
+    if (this.props.onEdit) {
+      this.props.onEdit((oldState => {
+        return produce(oldState, producer)
+      }));
     }
-    node.selected = true;
   }
 
 }

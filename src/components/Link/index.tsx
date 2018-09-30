@@ -8,7 +8,13 @@ export default class Node extends React.PureComponent<{
   link: I.Link,
   fromNode: I.Node,
   toNode: I.Node,
+  onSelect?: (id: number, preserve: boolean) => void;
 }> {
+  constructor(props: any) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+  }
+  
   public render() {
     const { link, fromNode, toNode } = this.props;
     const { from, to } = link;
@@ -22,10 +28,20 @@ export default class Node extends React.PureComponent<{
     
     const path = `M${x1 - .3} ${y1}h.3C${x1 + Math.abs(x2 - x1) / 2 + 1} ${y1} ${x2 - Math.abs(x2 - x1) / 2 - 1} ${y2} ${x2} ${y2}h.3`
     return (
-      <g className={styles.box}>
+      <g
+        className={styles.box}
+        onMouseDown={this.handleClick}
+      >
         <path d={path} className={styles.indicator} />
         <path d={path} className={classnames(styles.link)} />
       </g>
     )
+  }
+
+  private handleClick: React.MouseEventHandler = e => {
+    e.stopPropagation();
+    if (this.props.onSelect) {
+      this.props.onSelect(this.props.link.id, e.ctrlKey || e.shiftKey || e.metaKey);
+    }
   }
 }

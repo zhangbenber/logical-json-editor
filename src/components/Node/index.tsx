@@ -5,8 +5,9 @@ import classnames from 'classnames';
 import * as styles from './style.css';
 
 export default class Node extends React.PureComponent<{
+  id: number;
   node: I.Node;
-  onSelect?: (node: I.Node, preserve: boolean) => void;
+  onSelect?: (id: number, preserve: boolean) => void;
 }> {
   constructor(props: any) {
     super(props);
@@ -96,7 +97,7 @@ export default class Node extends React.PureComponent<{
         <rect
           x="-.2" y="-.2" rx=".25" ry=".25" width={node.width + .4} height={height + .4}
           className={styles.indicator}
-          onClick={this.handleClick}
+          onMouseDown={this.handleClick}
         />
 
       </g>
@@ -104,8 +105,9 @@ export default class Node extends React.PureComponent<{
   }
 
   private handleClick: React.MouseEventHandler = e => {
+    e.stopPropagation();
     if (this.props.onSelect) {
-      this.props.onSelect(this.props.node, e.ctrlKey);
+      this.props.onSelect(this.props.id, e.ctrlKey || e.shiftKey || e.metaKey);
     }
   }
 }
