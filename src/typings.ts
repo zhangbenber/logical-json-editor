@@ -10,32 +10,36 @@ export enum NodeType {
 }
 
 export interface Graph {
-  nodes: Node[];
+  nodes: Array<Node | undefined>;
   links: Link[];
 }
 
 export interface Port {
   name: string;
   direction: PortDirection;
-  node: Node;
 }
 
 export interface Node {
   type: NodeType;
-  id: number;
   name: string;
   x: number;
   y: number;
   width: number;
   ports: Port[];
+  portMap: { [name: string]: number };
   collapsed: boolean;
   selected: boolean;
 }
 
+export interface PortRef {
+  nodeId: number;
+  portName: string;
+}
+
 export interface Link {
   id: number;
-  from: Port;
-  to: Port;
+  from: PortRef;
+  to: PortRef;
   selected: boolean;
 }
 

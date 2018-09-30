@@ -1,27 +1,34 @@
 import * as React from 'react';
+
+import * as helpers from './helpers';
 import * as I from './typings';
 
-import GraphView from './components/Graph';
-import Graph from './models/Graph';
+import Graph from './components/Graph';
 
-import InputNode from './models/InputNode';
-import LogicalNode from './models/LogicalNode';
-import OutputNode from './models/OutputNode';
+const graph: I.Graph = {
+  nodes: [],
+  links: [],
+};
 
-import Link from './models/Link';
+const input = helpers.createNode(graph, I.NodeType.INPUT, 'input');
+const output = helpers.createNode(graph, I.NodeType.OUTPUT, 'output');
+const logical = helpers.createNode(graph, I.NodeType.LOGICAL, 'logical');
 
-const graph = new Graph();
+helpers.moveNode(graph.nodes[input] as I.Node, 8, 4, 4);
+helpers.moveNode(graph.nodes[output] as I.Node, 12, 8, 5);
+helpers.moveNode(graph.nodes[logical] as I.Node, 3, 7);
 
-const input = graph.addNode(new InputNode('input')) as InputNode;
-const output = graph.addNode(new OutputNode('output')) as OutputNode;
-const logical = graph.addNode(new LogicalNode('logical')) as LogicalNode;
+helpers.createLink(
+  graph,
+  { nodeId: input, portName: 'input' },
+  { nodeId: logical, portName: 'in' }
+);
 
-input.moveTo(8, 4, 4);
-output.moveTo(12, 8, 5);
-logical.moveTo(3, 7);
-
-graph.addLink(new Link(input.getPort(), logical.ports[0]));
-graph.addLink(new Link(logical.ports[1], output.getPort()));
+helpers.createLink(
+  graph,
+  { nodeId: logical, portName: 'out' },
+  { nodeId: output, portName: 'output' }
+);
 
 console.log(graph)
 
@@ -34,7 +41,7 @@ const dimension: I.Dimension = {
 class App extends React.Component {
   public render() {
     return (
-      <GraphView
+      <Graph
         graph={graph}
         dimension={dimension}
         className="app"

@@ -48,10 +48,21 @@ export default class Graph extends React.PureComponent<{
             height="200"
             fill="url(#grid)"
           />
-          {nodes.map(node => <Node node={node} key={node.id}
-            onSelect={this.handleSelectNode}
-          />)}
-          {links.map(link => <Link link={link} key={link.id} />)}
+          {nodes.map((node, id) => 
+            node ? <Node
+              node={node}
+              key={id}
+              onSelect={this.handleSelectNode}
+            /> : null)
+          }
+          {links.map((link) =>
+            <Link
+              link={link}
+              key={link.id}
+              fromNode={nodes[link.from.nodeId] as I.Node}
+              toNode={nodes[link.to.nodeId] as I.Node}
+            />)
+          }
         </svg>
       </div>
     );
@@ -95,7 +106,7 @@ export default class Graph extends React.PureComponent<{
   }
 
   private deselectAll() {
-    this.props.graph.nodes.forEach(node => node.selected = false);
+    // this.props.graph.nodes.forEach(node => node.selected = false);
     this.props.graph.links.forEach(link => link.selected = false);
   }
 

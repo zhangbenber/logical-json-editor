@@ -5,15 +5,15 @@ import classnames from 'classnames';
 import * as styles from './style.css';
 
 export default class Node extends React.PureComponent<{
-  link: I.Link
+  link: I.Link,
+  fromNode: I.Node,
+  toNode: I.Node,
 }> {
   public render() {
-    const { link } = this.props;
+    const { link, fromNode, toNode } = this.props;
     const { from, to } = link;
-    const fromNode = from.node;
-    const toNode = to.node;
-    const fromIndex = fromNode.collapsed ? -1.05 : fromNode.ports.indexOf(from);
-    const toIndex = toNode.collapsed ? -1.05 : toNode.ports.indexOf(to);
+    const fromIndex = fromNode.collapsed ? -1.05 : fromNode.portMap[from.portName];
+    const toIndex = toNode.collapsed ? -1.05 : toNode.portMap[to.portName];
 
     const x1 = fromNode.x + fromNode.width + .07;
     const y1 = fromNode.y + fromIndex + 1.5 + .05;
