@@ -22,6 +22,11 @@ export default class Graph extends React.PureComponent<{
 
   private box: HTMLDivElement | null = null;
 
+  constructor(props: any) {
+    super(props);
+    this.handleSelectNode = this.handleSelectNode.bind(this);
+  }
+
   public render() {
     const { nodes, links } = this.props.graph;
     return (
@@ -43,7 +48,9 @@ export default class Graph extends React.PureComponent<{
             height="200"
             fill="url(#grid)"
           />
-          {nodes.map(node => <Node node={node} key={node.id} />)}
+          {nodes.map(node => <Node node={node} key={node.id}
+            onSelect={this.handleSelectNode}
+          />)}
           {links.map(link => <Link link={link} key={link.id} />)}
         </svg>
       </div>
@@ -51,7 +58,6 @@ export default class Graph extends React.PureComponent<{
   }
 
   private renderDefs() {
-    
     return <defs>
       <pattern id="grid" width="1" height="1" patternUnits="userSpaceOnUse">
         <rect x="0" y="0" width="1.1" height="1.1" className={styles.grid} />
@@ -86,6 +92,18 @@ export default class Graph extends React.PureComponent<{
     } ${
       (height - dimension.oY) / dimension.scale
     }`
+  }
+
+  private deselectAll() {
+    this.props.graph.nodes.forEach(node => node.selected = false);
+    this.props.graph.links.forEach(link => link.selected = false);
+  }
+
+  private handleSelectNode(node: I.Node, preserve: boolean) {
+    if (!preserve) {
+      this.deselectAll();
+    }
+    node.selected = true;
   }
 
 }

@@ -21,7 +21,7 @@
 
 .indicator {
   fill: transparent;
-  stroke-width: .15;
+  stroke-width: .1;
   cursor: move;
 }
 
@@ -29,7 +29,7 @@
   stroke: rgba(28, 115, 187, .4);
 }
 
-.box:active .indicator {
+.box:active .indicator, .box.selected .indicator {
   stroke: rgb(28, 115, 187);
 }
 

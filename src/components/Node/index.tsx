@@ -5,8 +5,14 @@ import classnames from 'classnames';
 import * as styles from './style.css';
 
 export default class Node extends React.PureComponent<{
-  node: I.Node
+  node: I.Node;
+  onSelect?: (node: I.Node, preserve: boolean) => void;
 }> {
+  constructor(props: any) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
   public render() {
     const { node } = this.props;
     const { width, ports, collapsed } = node;
@@ -19,7 +25,8 @@ export default class Node extends React.PureComponent<{
           {
             [I.NodeType.INPUT]: styles.input,
             [I.NodeType.OUTPUT]: styles.output,
-          }[node.type]
+          }[node.type],
+          { [styles.selected]: node.selected }
         )}
       >
 
@@ -87,11 +94,18 @@ export default class Node extends React.PureComponent<{
         })}
 
         <rect
-          x="-.2" y="-.2" rx=".2" ry=".2" width={node.width + .4} height={height + .4}
+          x="-.2" y="-.2" rx=".25" ry=".25" width={node.width + .4} height={height + .4}
           className={styles.indicator}
+          onClick={this.handleClick}
         />
 
       </g>
     );
+  }
+
+  private handleClick: React.MouseEventHandler = e => {
+    if (this.props.onSelect) {
+      this.props.onSelect(this.props.node, e.ctrlKey);
+    }
   }
 }

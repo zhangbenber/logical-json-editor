@@ -44,3 +44,13 @@ export interface Dimension {
   oY: number;
   scale: number;
 }
+
+export interface Sheet {
+  name: string;
+  dimension: Dimension;
+  graph: Graph;
+}
+
+export interface Document {
+  sheets: Sheet[];
+}

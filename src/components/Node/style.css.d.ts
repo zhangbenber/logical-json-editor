@@ -3,6 +3,7 @@ export const node: string;
 export const title: string;
 export const border: string;
 export const indicator: string;
+export const selected: string;
 export const titleText: string;
 export const port: string;
 export const inPort: string;
