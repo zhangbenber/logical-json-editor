@@ -26,7 +26,7 @@ export function createNode(graph: I.Graph, type: I.NodeType, name: string) {
   const id = graph.nodes.length - 1;
   if (isIONode) {
     setPorts(node, [{
-      name,
+      name: type === I.NodeType.INPUT ? 'out' : 'in',
       direction: type === I.NodeType.INPUT ? I.PortDirection.OUT : I.PortDirection.IN
     }]);
   } else {

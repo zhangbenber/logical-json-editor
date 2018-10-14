@@ -10,6 +10,8 @@ import Attributes from '../Attributes';
 import Graph from '../Graph';
 import Library from '../Library';
 
+import nodeMeta from 'src/meta';
+
 const dimension: I.Dimension = {
   oX: 0,
   oY: 0,
@@ -45,14 +47,14 @@ class App extends React.Component<{
 
     helpers.createLink(
       graph,
-      { nodeId: input, portName: 'input' },
+      { nodeId: input, portName: 'out' },
       { nodeId: logical, portName: 'in' }
     );
 
     helpers.createLink(
       graph,
       { nodeId: logical, portName: 'out' },
-      { nodeId: output, portName: 'output' }
+      { nodeId: output, portName: 'in' }
     );
 
     console.log(graph)
@@ -63,7 +65,10 @@ class App extends React.Component<{
   public render() {
     return (
       <div className={classnames(styles.editor, this.props.className || '')}>
-        <Library className={styles.library} />
+        <Library
+          className={styles.library}
+          items={nodeMeta}
+        />
         <Graph
           graph={this.state.graph}
           onEdit={this.handleEdit}

@@ -1,12 +1,13 @@
 import * as React from 'react';
-// import * as I from '../../typings';
+import * as I from '../../../typings';
 
 import classnames from 'classnames';
 import * as styles from './style.css';
 
 export default class LibraryGroup extends React.PureComponent<{
   title: string;
-  items: any[];
+  items: I.NodeMeta[];
+  onSelectedNode?: (node: I.NodeMeta | null) => void;
 }, { expanded: boolean }> {
   constructor(props: any) {
     super(props);
@@ -14,9 +15,13 @@ export default class LibraryGroup extends React.PureComponent<{
       expanded: true
     };
     this.toggleExpanded = this.toggleExpanded.bind(this);
+    this.handleSelect = this.handleSelect.bind(this);
   }
   
   public render() {
+    if (!this.props.items.length) {
+      return null;
+    }
     return <div className={classnames(
       styles.group,
       { [styles.expanded]: this.state.expanded }
@@ -32,13 +37,21 @@ export default class LibraryGroup extends React.PureComponent<{
           className={styles.item}
           tabIndex={0}
           draggable={true}
-        >123</div>)}
+          onFocus={() => this.handleSelect(item)}
+          onBlur={() => this.handleSelect(null)}
+        >{item.name}</div>)}
       </div>
     </div>
   }
 
   private toggleExpanded() {
     this.setState({ expanded: !this.state.expanded });
+  }
+
+  private handleSelect(node: I.NodeMeta | null) {
+    if (this.props.onSelectedNode) {
+      this.props.onSelectedNode(node);
+    }
   }
 
 }

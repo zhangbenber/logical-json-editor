@@ -9,6 +9,14 @@ export enum NodeType {
   LOGICAL,
 }
 
+export enum PortType {
+  STRING,
+  NUMBER,
+  BOOLEAN,
+  OBJECT,
+  ANY,
+}
+
 export enum MouseMovmentType {
   NONE,
   DRAG_NODE,
@@ -70,4 +78,29 @@ export interface Sheet {
 
 export interface Document {
   sheets: Sheet[];
+}
+
+export interface NodeCategoryMeta {
+  category: string;
+  nodes: NodeMeta[];
+}
+
+export interface NodeMeta {
+  type: NodeType;
+  name: string;
+  desc: string;
+  portGroups: PortGroupMeta[];
+}
+
+export interface PortGroupMeta {
+  extendable: boolean;
+  defaultPairs?: number;
+  ports: PortMeta[];
+}
+
+export interface PortMeta {
+  name: string;
+  direction: PortDirection;
+  type: PortType;
+  desc: string;
 }

@@ -22,6 +22,31 @@
   left: 2px;
   right: 2px;
   top: 32px;
-  bottom: 2px;
+  bottom: 134px;
   overflow-y: auto;
+}
+
+.desc {
+  position: absolute;
+  height: 130px;
+  left: 2px;
+  right: 2px;
+  bottom: 2px;
+  padding: 4px;
+  background: #666;
+  border: 1px solid #555;
+  overflow-y: auto;
+  line-height: 14px;
+}
+
+.desc p {
+  margin: 2px 0;
+}
+
+.desc hr {
+  height: 0;
+  background: #777;
+  border: none;
+  border-bottom: 1px solid #888;
+  margin: 6px 0 5px;
 }

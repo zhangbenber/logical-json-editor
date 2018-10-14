@@ -15,7 +15,7 @@ export default class Attributes extends React.PureComponent<{
   
   public render() {
     return <div className={classnames(styles.box, this.props.className || '')}>
-      <Palette title="Attributes" />
+      <Palette title="节点属性" />
     </div>
   }
 

@@ -1,6 +1,7 @@
 .group {
-  line-height: 22px;
+  line-height: 24px;
   padding-bottom: 2px;
+  color: #eee;
 }
 
 .title {
