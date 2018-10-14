@@ -3,11 +3,11 @@
 }
 
 .view {
-  background: #aaa;
+  background: #808080;
 }
 
 .grid {
-  stroke: #888;
+  stroke: #999;
   stroke-width: .02;
   fill: transparent;
 }

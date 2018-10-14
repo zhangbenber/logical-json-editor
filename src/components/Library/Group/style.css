@@ -1,0 +1,43 @@
+.group {
+  line-height: 22px;
+  padding-bottom: 2px;
+}
+
+.title {
+  background: #666;
+  font-weight: bold;
+  cursor: default;
+}
+.title::before {
+  font-family: Webdings;
+  content: '4';
+  display: inline-block;
+  width: 16px;
+  text-align: center;
+}
+.title:hover {
+  background: #6a6a6a;
+}
+
+.content {
+  display: none;
+  padding-top: 2px;
+}
+
+.expanded .title::before {
+  content: '6';
+}
+.expanded .content {
+  display: block;
+}
+
+.item {
+  padding-left: 16px;
+  cursor: default;
+}
+.item:hover {
+  background: #606060;
+}
+.item:focus {
+  background: #597690;
+}

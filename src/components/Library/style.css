@@ -1,0 +1,27 @@
+.box {
+
+}
+
+.search {
+  height: 30px;
+  line-height: 30px;
+  padding: 0 8px;
+  border-bottom: 1px solid #555;
+  display: flex;
+}
+.search-input {
+  width: 0;
+  flex: 1;
+  border: none;
+  background: none;
+  margin-left: 4px;
+}
+
+.content {
+  position: absolute;
+  left: 2px;
+  right: 2px;
+  top: 32px;
+  bottom: 2px;
+  overflow-y: auto;
+}
