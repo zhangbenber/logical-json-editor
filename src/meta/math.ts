@@ -4,7 +4,7 @@ const mathNodeMeta: I.NodeCategoryMeta = {
   category: '数学运算',
   nodes: [
     {
-      type: I.NodeType.INPUT,
+      type: I.NodeType.LOGICAL,
       name: 'add',
       desc: '加法运算，对所有的输入进行求和。',
       portGroups: [
@@ -25,7 +25,7 @@ const mathNodeMeta: I.NodeCategoryMeta = {
     },
 
     {
-      type: I.NodeType.INPUT,
+      type: I.NodeType.LOGICAL,
       name: 'sub',
       desc: '减法运算，求两个输入之间的差值。',
       portGroups: [
@@ -41,7 +41,7 @@ const mathNodeMeta: I.NodeCategoryMeta = {
     },
 
     {
-      type: I.NodeType.INPUT,
+      type: I.NodeType.LOGICAL,
       name: 'mul',
       desc: '乘法运算，对所有的输入进行累乘求积。',
       portGroups: [
@@ -62,7 +62,7 @@ const mathNodeMeta: I.NodeCategoryMeta = {
     },
 
     {
-      type: I.NodeType.INPUT,
+      type: I.NodeType.LOGICAL,
       name: 'div',
       desc: '除法运算，求两个输入之间的比值。',
       portGroups: [
@@ -78,7 +78,7 @@ const mathNodeMeta: I.NodeCategoryMeta = {
     },
 
     {
-      type: I.NodeType.INPUT,
+      type: I.NodeType.LOGICAL,
       name: 'cmp',
       desc: '判断多个值是否满足特定的大小关系。',
       portGroups: [
@@ -92,7 +92,7 @@ const mathNodeMeta: I.NodeCategoryMeta = {
         {
           extendable: false,
           ports: [
-            { name: 'opt', direction: I.PortDirection.OUT, type: I.PortType.STRING, desc: '比较方法。' },
+            { name: 'opt', direction: I.PortDirection.IN, type: I.PortType.STRING, desc: '比较方法。' },
             { name: 'out', direction: I.PortDirection.OUT, type: I.PortType.BOOLEAN, desc: '输出布尔值，表示大小关系是否成立。' },
           ]
         }

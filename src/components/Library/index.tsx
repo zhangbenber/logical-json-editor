@@ -10,7 +10,6 @@ import Group from './Group';
 export default class Library extends React.PureComponent<{
   items: I.NodeCategoryMeta[];
   className?: any;
-  onDrag?: (data: I.Node) => void;
 }, {
   selectedNode: I.NodeMeta | null;
 }> {

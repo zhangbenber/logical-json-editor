@@ -39,6 +39,7 @@ export default class LibraryGroup extends React.PureComponent<{
           draggable={true}
           onFocus={() => this.handleSelect(item)}
           onBlur={() => this.handleSelect(null)}
+          onDragStart={(e) => this.handleDragStart(e, item)}
         >{item.name}</div>)}
       </div>
     </div>
@@ -52,6 +53,10 @@ export default class LibraryGroup extends React.PureComponent<{
     if (this.props.onSelectedNode) {
       this.props.onSelectedNode(node);
     }
+  }
+
+  private handleDragStart(e: React.DragEvent, node: I.NodeMeta) {
+    e.dataTransfer.setData('application/x-logical-json-node-meta', JSON.stringify(node));
   }
 
 }

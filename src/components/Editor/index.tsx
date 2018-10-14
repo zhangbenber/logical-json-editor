@@ -37,13 +37,13 @@ class App extends React.Component<{
       links: [],
     };
 
-    const input = helpers.createNode(graph, I.NodeType.INPUT, 'input');
-    const output = helpers.createNode(graph, I.NodeType.OUTPUT, 'output');
-    const logical = helpers.createNode(graph, I.NodeType.LOGICAL, 'logical');
+    const input = helpers.createNode(graph, nodeMeta[0].nodes[0], 2, 3);
+    const output = helpers.createNode(graph, nodeMeta[0].nodes[1], 20, 5);
+    const logical = helpers.createNode(graph, nodeMeta[1].nodes[2], 10, 8);
 
-    helpers.moveNode(graph.nodes[input] as I.Node, 8, 4, 4);
-    helpers.moveNode(graph.nodes[output] as I.Node, 12, 8, 5);
-    helpers.moveNode(graph.nodes[logical] as I.Node, 3, 7);
+    // helpers.moveNode(graph.nodes[input] as I.Node, 8, 4, 4);
+    // helpers.moveNode(graph.nodes[output] as I.Node, 12, 8, 5);
+    // helpers.moveNode(graph.nodes[logical] as I.Node, 3, 7);
 
     helpers.createLink(
       graph,

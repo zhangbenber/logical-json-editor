@@ -2,21 +2,30 @@ import * as I from './typings';
 
 let nextLinkId = 0;
 
-function getDefaultPorts(name: string) {
-  return [
-    { name: 'in', direction: I.PortDirection.IN },
-    { name: 'out', direction: I.PortDirection.OUT }
-  ]
+function getDefaultPorts(meta: I.NodeMeta) {
+  const groups = meta.portGroups;
+  const result: I.Port[] = [];
+  groups.forEach(group => {
+    (group.extendable ? Array(group.defaultPairs || 1).fill(undefined) : [undefined]).forEach((_, i) => {
+      group.ports.forEach(port => {
+        result.push({
+          name: group.extendable ? `${port.name}.${i + 1}` : port.name,
+          direction: port.direction
+        });
+      });
+    });
+  })
+  return result;
 }
 
-export function createNode(graph: I.Graph, type: I.NodeType, name: string) {
-  const isIONode: boolean = type === I.NodeType.INPUT || type === I.NodeType.OUTPUT;
+export function createNode(graph: I.Graph, meta: I.NodeMeta, x?: number, y?: number) {
+  const isIONode: boolean = meta.type === I.NodeType.INPUT || meta.type === I.NodeType.OUTPUT;
   const node: I.Node = {
-    type,
-    name,
-    x: 0,
-    y: 0,
-    width: 6,
+    type: meta.type,
+    name: meta.name,
+    x: x || 0,
+    y: y || 0,
+    width: 5,
     collapsed: isIONode,
     selected: false,
     ports: [],
@@ -26,11 +35,11 @@ export function createNode(graph: I.Graph, type: I.NodeType, name: string) {
   const id = graph.nodes.length - 1;
   if (isIONode) {
     setPorts(node, [{
-      name: type === I.NodeType.INPUT ? 'out' : 'in',
-      direction: type === I.NodeType.INPUT ? I.PortDirection.OUT : I.PortDirection.IN
+      name: meta.type === I.NodeType.INPUT ? 'out' : 'in',
+      direction: meta.type === I.NodeType.INPUT ? I.PortDirection.OUT : I.PortDirection.IN
     }]);
   } else {
-    setPorts(node, getDefaultPorts(name));
+    setPorts(node, getDefaultPorts(meta));
   }
   return id;
 }

@@ -4,7 +4,7 @@ const logicNodeMeta: I.NodeCategoryMeta = {
   category: '布尔逻辑',
   nodes: [
     {
-      type: I.NodeType.INPUT,
+      type: I.NodeType.LOGICAL,
       name: 'and',
       desc: '且运算，即所有的输入均为真时，输出才为真。若没有任何输入，则输出真。',
       portGroups: [
@@ -25,7 +25,7 @@ const logicNodeMeta: I.NodeCategoryMeta = {
     },
 
     {
-      type: I.NodeType.INPUT,
+      type: I.NodeType.LOGICAL,
       name: 'or',
       desc: '或运算，即至少有一个输入为真时，输出就为真。若没有任何输入，则输出假。',
       portGroups: [
@@ -46,7 +46,7 @@ const logicNodeMeta: I.NodeCategoryMeta = {
     },
 
     {
-      type: I.NodeType.INPUT,
+      type: I.NodeType.LOGICAL,
       name: 'not',
       desc: '非运算，即输出与输入相反。',
       portGroups: [
@@ -59,6 +59,30 @@ const logicNodeMeta: I.NodeCategoryMeta = {
         }
       ]
     },
+    
+    {
+      type: I.NodeType.LOGICAL,
+      name: 'if',
+      desc: '输入若干个值，依次判断一系列条件是否为真，输出与第一个真值条件所对应的值。',
+      portGroups: [
+        {
+          extendable: true,
+          defaultPairs: 2,
+          ports: [
+            { name: 'in', direction: I.PortDirection.IN, type: I.PortType.ANY, desc: '一系列输入值。' },
+            { name: 'c', direction: I.PortDirection.IN, type: I.PortType.BOOLEAN, desc: '与输入值对应的一系列布尔条件。' },
+          ]
+        },
+        {
+          extendable: false,
+          ports: [
+            { name: 'else', direction: I.PortDirection.IN, type: I.PortType.ANY, desc: '默认值，作为所有条件均不满足时的输出。' },
+            { name: 'out', direction: I.PortDirection.OUT, type: I.PortType.ANY, desc: '输出值。' },
+          ]
+        }
+      ]
+    },
+
   ],
 };
 

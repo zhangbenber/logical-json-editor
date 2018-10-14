@@ -10,6 +10,8 @@ import Node from '../Node';
 import produce from 'immer';
 import reducersOf from '../../reducers';
 
+import * as helpers from 'src/helpers';
+
 const nullMouseMovment: I.MouseMovment = {
   type: I.MouseMovmentType.NONE,
   x: 0,
@@ -44,6 +46,8 @@ export default class Graph extends React.PureComponent<{
     this.handleMouseDown = this.handleMouseDown.bind(this);
     this.handleMouseMove = this.handleMouseMove.bind(this);
     this.handleMouseUp = this.handleMouseUp.bind(this);
+    this.handleDragOver = this.handleDragOver.bind(this);
+    this.handleDrop = this.handleDrop.bind(this);
     this.handleStartMouseMovment = this.handleStartMouseMovment.bind(this);
   }
 
@@ -53,15 +57,17 @@ export default class Graph extends React.PureComponent<{
       <div
         className={classnames(this.props.className, styles.box)}
         ref={r => this.calcSize(r)}
+        onMouseDown={this.handleMouseDown}
+        onMouseMove={this.handleMouseMove}
+        onMouseUp={this.handleMouseUp}
+        onDragOver={this.handleDragOver}
+        onDrop={this.handleDrop}
       >
         <svg
           className={styles.view}
           width={this.state.width}
           height={this.state.height}
           viewBox={this.calcViewBox()}
-          onMouseDown={this.handleMouseDown}
-          onMouseMove={this.handleMouseMove}
-          onMouseUp={this.handleMouseUp}
         >
           {this.renderDefs()}
           <rect
@@ -143,10 +149,14 @@ export default class Graph extends React.PureComponent<{
   }
 
   private getMouseCords(e: React.MouseEvent) {
+    if (!this.box) {
+      return { x: 0, y: 0 };
+    }
     const { dimension } = this.props;
+    const boundary = this.box.getBoundingClientRect();
     return {
-      x: (e.clientX - dimension.oX) / dimension.scale,
-      y: (e.clientY - dimension.oY) / dimension.scale,
+      x: (e.clientX - boundary.left - dimension.oX) / dimension.scale,
+      y: (e.clientY - boundary.top - dimension.oY) / dimension.scale,
     }
   }
 
@@ -184,6 +194,22 @@ export default class Graph extends React.PureComponent<{
     }
     this.setState({
       mouseMovment: nullMouseMovment
+    });
+  }
+
+  private handleDragOver: React.DragEventHandler = e => {
+    e.dataTransfer.dropEffect = 'copy';
+    if (e.dataTransfer.types.indexOf('application/x-logical-json-node-meta') > -1) {
+      e.preventDefault();
+    }
+  }
+
+  private handleDrop: React.DragEventHandler = e => {
+    const data = JSON.parse(e.dataTransfer.getData('application/x-logical-json-node-meta'));
+    const cords = this.getMouseCords(e);
+    this.apply(state => {
+      const id = helpers.createNode(state, data, Math.round(cords.x - 2.5), Math.round(cords.y - .5));
+      reducersOf(state).selectNode(id, false);
     });
   }
 
