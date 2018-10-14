@@ -75,7 +75,10 @@ class App extends React.Component<{
           dimension={dimension}
           className={styles.graph}
         />
-        <Attributes className={styles.attributes} />
+        <Attributes
+          className={styles.attributes}
+          graph={this.state.graph}
+        />
       </div>
     );
   }

@@ -30,6 +30,7 @@ export interface Graph {
 export interface Port {
   name: string;
   direction: PortDirection;
+  constant?: any;
 }
 
 export interface Node {

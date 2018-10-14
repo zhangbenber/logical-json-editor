@@ -7,7 +7,7 @@ import * as styles from './style.css';
 export default class LibraryGroup extends React.PureComponent<{
   title: string;
   items: I.NodeMeta[];
-  onSelectedNode?: (node: I.NodeMeta | null) => void;
+  onSelectNode?: (node: I.NodeMeta | null) => void;
 }, { expanded: boolean }> {
   constructor(props: any) {
     super(props);
@@ -50,8 +50,8 @@ export default class LibraryGroup extends React.PureComponent<{
   }
 
   private handleSelect(node: I.NodeMeta | null) {
-    if (this.props.onSelectedNode) {
-      this.props.onSelectedNode(node);
+    if (this.props.onSelectNode) {
+      this.props.onSelectNode(node);
     }
   }
 

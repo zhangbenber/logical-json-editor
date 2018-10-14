@@ -33,7 +33,7 @@ export default class Library extends React.PureComponent<{
             <Group
               title={category.category}
               items={category.nodes}
-              onSelectedNode={this.handleSelectNode}
+              onSelectNode={this.handleSelectNode}
               key={i}
             />
           )}

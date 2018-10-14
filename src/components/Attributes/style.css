@@ -1,3 +1,94 @@
 .box {
 
 }
+
+.desc {
+  padding: 8px;
+}
+
+.group {
+  padding: 0 3px;
+  color: #eee;
+}
+
+.group-item {
+  position: relative;
+}
+
+.group-item.extendable {
+  padding-left: 27px;
+}
+
+.action {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 24px;
+  padding-top: 4px;
+  bottom: 0;
+  background: #666;
+  text-align: center;
+}
+.group-item:hover .action {
+  background: #6a6a6a;
+}
+.action-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: #6a6a6a;
+  display: none;
+  text-align: center;
+}
+.action:hover .action-bar {
+  display: block;
+}
+.action-bar > div {
+  margin: 2px;
+  background: #5f5f5f;
+  line-height: 20px;
+  cursor: default;
+  font-size: 14px;
+  font-weight: bold;
+}
+.action-bar > div:hover {
+  background: #555;
+}
+.action-bar > div:active {
+  background: #4c4c4c;
+}
+/* .group.extendable:hover .action {
+  display: block;
+} */
+
+.port {
+  padding: 4px 8px;
+  background: #666;
+  margin: 3px 0;
+}
+.port:hover {
+  background: #6a6a6a;
+}
+.port em {
+  color: #aaa;
+}
+.port-conn {
+  height: 20px;
+  display: flex;
+  line-height: 20px;
+}
+.port-constant {
+  margin-left: 8px;
+  text-decoration: none;
+  color: #ffc107;
+  border-bottom: 1px dotted #ffc107;
+  cursor: pointer;
+  height: 19px;
+}
+.port-constant:hover {
+  text-decoration: none;
+  color: #ffd54f;
+  border-color: #ffd54f;
+}
