@@ -9,6 +9,11 @@ export enum NodeType {
   LOGICAL,
 }
 
+export enum MouseMovmentType {
+  NONE,
+  DRAG_NODE,
+}
+
 export interface Graph {
   nodes: Array<Node | undefined>;
   links: Link[];
@@ -47,6 +52,14 @@ export interface Dimension {
   oX: number;
   oY: number;
   scale: number;
+}
+
+export interface MouseMovment {
+  type: MouseMovmentType;
+  x: number;
+  y: number;
+  startX: number;
+  startY: number;
 }
 
 export interface Sheet {

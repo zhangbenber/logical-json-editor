@@ -10,6 +10,14 @@ import Node from '../Node';
 import produce from 'immer';
 import reducersOf from '../../reducers';
 
+const nullMouseMovment: I.MouseMovment = {
+  type: I.MouseMovmentType.NONE,
+  x: 0,
+  y: 0,
+  startX: 0,
+  startY: 0,
+}
+
 export default class Graph extends React.PureComponent<{
   graph: I.Graph,
   dimension: I.Dimension,
@@ -18,18 +26,25 @@ export default class Graph extends React.PureComponent<{
 }, {
   width: number,
   height: number,
+  mouseMovment: I.MouseMovment
 }> {
   public state = {
     width: 0,
     height: 0,
+    mouseMovment: nullMouseMovment
   }
 
   private box: HTMLDivElement | null = null;
+  private nextMouseMovment: I.MouseMovmentType = I.MouseMovmentType.NONE;
 
   constructor(props: any) {
     super(props);
     this.handleSelectNode = this.handleSelectNode.bind(this);
     this.handleDeselectAll = this.handleDeselectAll.bind(this);
+    this.handleMouseDown = this.handleMouseDown.bind(this);
+    this.handleMouseMove = this.handleMouseMove.bind(this);
+    this.handleMouseUp = this.handleMouseUp.bind(this);
+    this.handleStartMouseMovment = this.handleStartMouseMovment.bind(this);
   }
 
   public render() {
@@ -44,7 +59,9 @@ export default class Graph extends React.PureComponent<{
           width={this.state.width}
           height={this.state.height}
           viewBox={this.calcViewBox()}
-          onMouseDown={this.handleDeselectAll}
+          onMouseDown={this.handleMouseDown}
+          onMouseMove={this.handleMouseMove}
+          onMouseUp={this.handleMouseUp}
         >
           {this.renderDefs()}
           <rect
@@ -53,12 +70,15 @@ export default class Graph extends React.PureComponent<{
             width="200"
             height="200"
             fill="url(#grid)"
+            onMouseDown={this.handleDeselectAll}
           />
           {nodes.map((node, id) => 
             node ? <Node
               id={id}
               node={node}
               key={id}
+              mouseMovment={this.state.mouseMovment}
+              onStartMouseMovment={this.handleStartMouseMovment}
               onSelect={this.handleSelectNode}
             /> : null)
           }
@@ -68,6 +88,8 @@ export default class Graph extends React.PureComponent<{
               key={link.id}
               fromNode={nodes[link.from.nodeId] as I.Node}
               toNode={nodes[link.to.nodeId] as I.Node}
+              mouseMovment={this.state.mouseMovment}
+              onStartMouseMovment={this.handleStartMouseMovment}
             />)
           }
         </svg>
@@ -118,6 +140,55 @@ export default class Graph extends React.PureComponent<{
 
   private handleSelectNode(id: number, preserve: boolean) {
     this.apply(state => { reducersOf(state).selectNode(id, preserve); })
+  }
+
+  private getMouseCords(e: React.MouseEvent) {
+    const { dimension } = this.props;
+    return {
+      x: (e.clientX - dimension.oX) / dimension.scale,
+      y: (e.clientY - dimension.oY) / dimension.scale,
+    }
+  }
+
+  private handleMouseDown: React.MouseEventHandler = e => {
+    const cords = this.getMouseCords(e);
+    this.setState({
+      mouseMovment: Object.assign({
+        type: this.nextMouseMovment,
+        startX: cords.x,
+        startY: cords.y,
+      }, cords)
+    });
+  }
+
+  private handleMouseMove: React.MouseEventHandler = e => {
+    const cords = this.getMouseCords(e);
+    this.setState({
+      mouseMovment: Object.assign({}, this.state.mouseMovment, cords)
+    });
+  }
+
+  private handleMouseUp: React.MouseEventHandler = e => {
+    const { mouseMovment } = this.state;
+    switch (mouseMovment.type) {
+      case I.MouseMovmentType.DRAG_NODE:
+        this.apply(state => {
+          state.nodes.forEach(node => {
+            if (node && node.selected) {
+              node.x = Math.round(node.x + mouseMovment.x - mouseMovment.startX);
+              node.y = Math.round(node.y + mouseMovment.y - mouseMovment.startY);
+            }
+          })
+        });
+        break;
+    }
+    this.setState({
+      mouseMovment: nullMouseMovment
+    });
+  }
+
+  private handleStartMouseMovment(type: I.MouseMovmentType) {
+    this.nextMouseMovment = type;
   }
 
   private apply(producer: (oldState: I.Graph) => any) {

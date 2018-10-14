@@ -7,20 +7,25 @@ import * as styles from './style.css';
 export default class Node extends React.PureComponent<{
   id: number;
   node: I.Node;
+  mouseMovment: I.MouseMovment;
   onSelect?: (id: number, preserve: boolean) => void;
+  onStartMouseMovment: (type: I.MouseMovmentType) => void;
 }> {
   constructor(props: any) {
     super(props);
-    this.handleClick = this.handleClick.bind(this);
+    this.handleMouseDown = this.handleMouseDown.bind(this);
   }
 
   public render() {
-    const { node } = this.props;
-    const { width, ports, collapsed } = node;
+    const { node, mouseMovment } = this.props;
+    const { width, ports, selected, collapsed } = node;
     const height = collapsed ? 1 : (ports.length + 1);
+    const offset = (selected && mouseMovment.type === I.MouseMovmentType.DRAG_NODE)
+      ? [mouseMovment.x - mouseMovment.startX, mouseMovment.y - mouseMovment.startY]
+      : [0, 0]
     return (
       <g
-        transform={`translate(${node.x},${node.y})`}
+        transform={`translate(${node.x + offset[0]},${node.y + offset[1]})`}
         className={classnames(
           styles.box,
           {
@@ -97,17 +102,17 @@ export default class Node extends React.PureComponent<{
         <rect
           x="-.2" y="-.2" rx=".25" ry=".25" width={node.width + .4} height={height + .4}
           className={styles.indicator}
-          onMouseDown={this.handleClick}
+          onMouseDown={this.handleMouseDown}
         />
 
       </g>
     );
   }
 
-  private handleClick: React.MouseEventHandler = e => {
-    e.stopPropagation();
-    if (this.props.onSelect) {
+  private handleMouseDown: React.MouseEventHandler = e => {
+    if (!this.props.node.selected && this.props.onSelect) {
       this.props.onSelect(this.props.id, e.ctrlKey || e.shiftKey || e.metaKey);
     }
+    this.props.onStartMouseMovment(I.MouseMovmentType.DRAG_NODE);
   }
 }
