@@ -8,13 +8,13 @@
 }
 
 .library {
-  width: 180px;
+  width: 200px;
   height: 100%;
   /* flex: 0; */
 }
 
 .attributes {
-  width: 250px;
+  width: 260px;
   height: 100%;
   /* flex: 0; */
 }

@@ -89,14 +89,14 @@ export default class Graph extends React.PureComponent<{
             /> : null)
           }
           {links.map((link) =>
-            <Link
+            link ? <Link
               link={link}
               key={link.id}
               fromNode={nodes[link.from.nodeId] as I.Node}
               toNode={nodes[link.to.nodeId] as I.Node}
               mouseMovment={this.state.mouseMovment}
               onStartMouseMovment={this.handleStartMouseMovment}
-            />)
+            /> : null)
           }
         </svg>
       </div>

@@ -40,7 +40,7 @@ export default class LibraryGroup extends React.PureComponent<{
           onFocus={() => this.handleSelect(item)}
           onBlur={() => this.handleSelect(null)}
           onDragStart={(e) => this.handleDragStart(e, item)}
-        >{item.name}</div>)}
+        >{item.name}<span className={styles.label}>{item.label}</span></div>)}
       </div>
     </div>
   }

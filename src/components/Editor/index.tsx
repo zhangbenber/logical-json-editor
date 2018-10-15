@@ -39,7 +39,7 @@ class App extends React.Component<{
 
     const input = helpers.createNode(graph, nodeMeta[0].nodes[0], 2, 3);
     const output = helpers.createNode(graph, nodeMeta[0].nodes[1], 20, 5);
-    const logical = helpers.createNode(graph, nodeMeta[1].nodes[2], 10, 8);
+    const logical = helpers.createNode(graph, nodeMeta[1].nodes[1], 10, 8);
 
     // helpers.moveNode(graph.nodes[input] as I.Node, 8, 4, 4);
     // helpers.moveNode(graph.nodes[output] as I.Node, 12, 8, 5);
@@ -48,7 +48,7 @@ class App extends React.Component<{
     helpers.createLink(
       graph,
       { nodeId: input, portName: 'out' },
-      { nodeId: logical, portName: 'in' }
+      { nodeId: logical, portName: 'in.1' }
     );
 
     helpers.createLink(
@@ -56,6 +56,8 @@ class App extends React.Component<{
       { nodeId: logical, portName: 'out' },
       { nodeId: output, portName: 'in' }
     );
+
+    (graph.nodes[logical] as I.Node).ports[1].constant = 'test';
 
     console.log(graph)
 

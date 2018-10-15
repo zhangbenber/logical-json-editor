@@ -45,7 +45,7 @@ export default class Attributes extends React.PureComponent<{
       if (meta) {
         return <div>
           <div className={styles.desc}>
-            <p><strong>{meta.name}</strong></p>
+            <p><strong>{meta.name} : </strong>{meta.label}</p>
             <p>{meta.desc}</p>
           </div>
           {this.renderPorts(node, meta)}
@@ -70,10 +70,14 @@ export default class Attributes extends React.PureComponent<{
               <div>x</div>
             </div>
           </div> : null}
-          {group.ports.map(port => <Port
-            meta={port}
-            key={port.name}
-          />)}
+          {group.ports.map(portMeta => {
+            const port = node.ports[node.portMap[`${portMeta.name}${group.extendable ? `.${j + 1}` : ''}`]];
+            return <Port
+              meta={portMeta}
+              port={port}
+              key={port.name}
+            />
+          })}
         </div>
       )}
     </div>)

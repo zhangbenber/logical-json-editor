@@ -6,7 +6,8 @@ const logicNodeMeta: I.NodeCategoryMeta = {
     {
       type: I.NodeType.LOGICAL,
       name: 'and',
-      desc: '且运算，即所有的输入均为真时，输出才为真。若没有任何输入，则输出真。',
+      label: '且运算',
+      desc: '所有的输入均为真时，输出才为真。若没有任何输入，则输出真。',
       portGroups: [
         {
           extendable: true,
@@ -27,7 +28,8 @@ const logicNodeMeta: I.NodeCategoryMeta = {
     {
       type: I.NodeType.LOGICAL,
       name: 'or',
-      desc: '或运算，即至少有一个输入为真时，输出就为真。若没有任何输入，则输出假。',
+      label: '或运算',
+      desc: '至少有一个输入为真时，输出就为真。若没有任何输入，则输出假。',
       portGroups: [
         {
           extendable: true,
@@ -48,7 +50,8 @@ const logicNodeMeta: I.NodeCategoryMeta = {
     {
       type: I.NodeType.LOGICAL,
       name: 'not',
-      desc: '非运算，即输出与输入相反。',
+      label: '非运算',
+      desc: '输出与输入相反。',
       portGroups: [
         {
           extendable: false,
@@ -63,6 +66,7 @@ const logicNodeMeta: I.NodeCategoryMeta = {
     {
       type: I.NodeType.LOGICAL,
       name: 'if',
+      label: '判断',
       desc: '输入若干个值，依次判断一系列条件是否为真，输出与第一个真值条件所对应的值。',
       portGroups: [
         {

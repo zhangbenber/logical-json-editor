@@ -6,6 +6,7 @@ const stringsNodeMeta: I.NodeCategoryMeta = {
     {
       type: I.NodeType.LOGICAL,
       name: 'cat',
+      label: '拼接字符串',
       desc: '将多个字符串拼接，生成一个新的字符串。',
       portGroups: [
         {

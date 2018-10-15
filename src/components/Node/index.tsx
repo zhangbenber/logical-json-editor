@@ -62,13 +62,24 @@ export default class Node extends React.PureComponent<{
         {node.type === I.NodeType.OUTPUT ?
           <circle
             cx=".4" cy=".5" r=".15"
-            className={classnames(styles.port, styles.inPort)}
+            className={classnames(
+              styles.port,
+              styles.inPort,
+              { [styles.connected]: !!node.ports[0].linkIds.length }
+            )}
           />
         : null}
         {node.type === I.NodeType.INPUT ?
           <circle
             cx={width - .4} cy=".5" r=".15"
-            className={classnames(styles.port, styles.outPort)}
+            className={classnames(
+              styles.port,
+              styles.outPort,
+              {
+                [styles.connected]: !!node.ports[0].linkIds.length,
+                [styles.constant]: node.ports[0].constant !== undefined,
+              }
+            )}
           />
         : null}
 
@@ -92,8 +103,12 @@ export default class Node extends React.PureComponent<{
                 className={classnames(
                   styles.port,
                   [styles.inPort, styles.outPort][dir],
-                )}
-              />
+                  {
+                    [styles.connected]: !!port.linkIds.length,
+                    [styles.constant]: port.constant !== undefined,
+          }
+        )}
+      />
               <rect x=".1" y="0" width={width - .2} height=".01" className={styles.split} />
             </g>
           )

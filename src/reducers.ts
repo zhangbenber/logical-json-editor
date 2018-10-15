@@ -3,12 +3,12 @@ import * as I from './typings';
 class ReducerFactory {
   constructor(private state: I.Graph) { }
   
-  public test() {
-    console.log(test);
-  }
-
   public deselectAll() {
-    this.state.links.forEach(link => link.selected = false);
+    this.state.links.forEach(link => {
+      if (link) {
+        link.selected = false;
+      }
+    });
     this.state.nodes.forEach(node => {
       if (node) {
         node.selected = false;

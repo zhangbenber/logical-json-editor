@@ -42,3 +42,10 @@
 .item:focus {
   background: #597690;
 }
+
+.label {
+  opacity: 0.45;
+  padding: 0 8px;
+  min-width: 65%;
+  float: right;
+}

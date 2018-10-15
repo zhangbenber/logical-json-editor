@@ -6,6 +6,7 @@ const ioNodeMeta: I.NodeCategoryMeta = {
     {
       type: I.NodeType.INPUT,
       name: 'input',
+      label: '输入',
       desc: '从逻辑外部获取输入。',
       portGroups: [
         {
@@ -20,6 +21,7 @@ const ioNodeMeta: I.NodeCategoryMeta = {
     {
       type: I.NodeType.OUTPUT,
       name: 'output',
+      label: '输出',
       desc: '向逻辑外部输出结果。',
       portGroups: [
         {

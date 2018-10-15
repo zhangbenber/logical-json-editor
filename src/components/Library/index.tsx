@@ -40,7 +40,6 @@ export default class Library extends React.PureComponent<{
         </div>
         <div className={styles.desc}>
           {this.renderDesc()}
-          
         </div>
       </Palette>
     </div>
@@ -58,13 +57,16 @@ export default class Library extends React.PureComponent<{
       return <p><em>在上方选择一个节点类别，可以查看其详细说明。</em></p>
     }
     return <div>
-      <p><strong>{selectedNode.name}</strong></p>
+      <p><strong>{selectedNode.name} : </strong>{selectedNode.label}</p>
       <p>{selectedNode.desc}</p>
       <hr />
       {selectedNode.portGroups.map((group, i) =>
          group.ports.map((port, j) =>
-          <p key={`${port.direction}${port.name}`}>
-            <strong>{port.direction === I.PortDirection.IN ? '>' : '<'} {port.name}{group.extendable ? '[]' : ''} : </strong>{port.desc}
+          <p key={`${port.direction}${port.name}`} className={classnames(
+            styles.port,
+            port.direction === I.PortDirection.IN ? styles.input : styles.output
+          )}>
+            <strong>{port.name}{group.extendable ? '[]' : ''} : </strong>{port.desc}
           </p> 
          )
       )}

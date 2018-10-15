@@ -7,14 +7,42 @@
   background: #6a6a6a;
 }
 .port em {
-  color: #aaa;
+  opacity: 0.45;
 }
+
 .conn {
   height: 20px;
   display: flex;
   line-height: 20px;
 }
-.constant {
+.conn::before {
+  display: inline-block;
+  width: 16px;
+  margin: 1px 4px 0 0;
+  text-align: center;
+  font-family: Wingdings;
+  color: #aaa;
+  opacity: 0.9;
+  text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+}
+.conn.input::before {
+  content: '\e8';
+}
+.conn.output::before {
+  content: '\e7';
+}
+.conn.input.connected::before {
+  color: #64B5F6;
+}
+.conn.output.connected::before {
+  color: #E57373;
+}
+.conn.input.constant::before {
+  content: 'l';
+  color: #81c784;
+}
+
+.link {
   margin-left: 8px;
   text-decoration: none;
   color: #ffc107;
@@ -22,7 +50,7 @@
   cursor: pointer;
   height: 19px;
 }
-.constant:hover {
+.link:hover {
   text-decoration: none;
   color: #ffd54f;
   border-color: #ffd54f;

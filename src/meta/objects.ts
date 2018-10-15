@@ -6,6 +6,7 @@ const objectsNodeMeta: I.NodeCategoryMeta = {
     {
       type: I.NodeType.LOGICAL,
       name: 'compose',
+      label: '拼装对象',
       desc: '根据传入的键值对，生成一个对象。',
       portGroups: [
         {
@@ -28,6 +29,7 @@ const objectsNodeMeta: I.NodeCategoryMeta = {
     {
       type: I.NodeType.LOGICAL,
       name: 'pick',
+      label: '对象取值',
       desc: '从一个对象中获取某个特定键对应的值。',
       portGroups: [
         {

@@ -10,7 +10,8 @@ function getDefaultPorts(meta: I.NodeMeta) {
       group.ports.forEach(port => {
         result.push({
           name: group.extendable ? `${port.name}.${i + 1}` : port.name,
-          direction: port.direction
+          direction: port.direction,
+          linkIds: [],
         });
       });
     });
@@ -36,7 +37,8 @@ export function createNode(graph: I.Graph, meta: I.NodeMeta, x?: number, y?: num
   if (isIONode) {
     setPorts(node, [{
       name: meta.type === I.NodeType.INPUT ? 'out' : 'in',
-      direction: meta.type === I.NodeType.INPUT ? I.PortDirection.OUT : I.PortDirection.IN
+      direction: meta.type === I.NodeType.INPUT ? I.PortDirection.OUT : I.PortDirection.IN,
+      linkIds: [],
     }]);
   } else {
     setPorts(node, getDefaultPorts(meta));
@@ -64,15 +66,23 @@ export function moveNode(node: I.Node, x: number, y?: number, width?: number) {
 }
 
 export function createLink(graph: I.Graph, from: I.PortRef, to: I.PortRef) {
-  const id = nextLinkId++;
-  const link: I.Link = {
-    id,
-    from,
-    to,
-    selected: false
-  };
-  graph.links.push(link);
-  return id;
+  const fromNode = graph.nodes[from.nodeId];
+  const toNode = graph.nodes[to.nodeId];
+  if (fromNode && toNode) {
+    const id = nextLinkId++;
+    const link: I.Link = {
+      id,
+      from,
+      to,
+      selected: false
+    };
+    graph.links.push(link);
+    fromNode.ports[fromNode.portMap[from.portName]].linkIds.push(id);
+    toNode.ports[toNode.portMap[to.portName]].linkIds.push(id);
+    return id;
+  } else {
+    return null;
+  }
 }
 
 export function removeLink(graph: I.Graph, id: number) {

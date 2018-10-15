@@ -24,13 +24,14 @@ export enum MouseMovmentType {
 
 export interface Graph {
   nodes: Array<Node | undefined>;
-  links: Link[];
+  links: Array<Link | undefined>;
 }
 
 export interface Port {
   name: string;
   direction: PortDirection;
   constant?: any;
+  linkIds: number[];
 }
 
 export interface Node {
@@ -89,6 +90,7 @@ export interface NodeCategoryMeta {
 export interface NodeMeta {
   type: NodeType;
   name: string;
+  label: string;
   desc: string;
   portGroups: PortGroupMeta[];
 }

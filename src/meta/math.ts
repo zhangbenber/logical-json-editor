@@ -6,7 +6,8 @@ const mathNodeMeta: I.NodeCategoryMeta = {
     {
       type: I.NodeType.LOGICAL,
       name: 'add',
-      desc: '加法运算，对所有的输入进行求和。',
+      label: '加法',
+      desc: '对所有的输入进行求和。',
       portGroups: [
         {
           extendable: true,
@@ -27,7 +28,8 @@ const mathNodeMeta: I.NodeCategoryMeta = {
     {
       type: I.NodeType.LOGICAL,
       name: 'sub',
-      desc: '减法运算，求两个输入之间的差值。',
+      label: '减法',
+      desc: '求两个输入之间的差值。',
       portGroups: [
         {
           extendable: false,
@@ -43,7 +45,8 @@ const mathNodeMeta: I.NodeCategoryMeta = {
     {
       type: I.NodeType.LOGICAL,
       name: 'mul',
-      desc: '乘法运算，对所有的输入进行累乘求积。',
+      label: '乘法',
+      desc: '对所有的输入进行累乘求积。',
       portGroups: [
         {
           extendable: true,
@@ -64,7 +67,8 @@ const mathNodeMeta: I.NodeCategoryMeta = {
     {
       type: I.NodeType.LOGICAL,
       name: 'div',
-      desc: '除法运算，求两个输入之间的比值。',
+      label: '除法',
+      desc: '求两个输入之间的比值。',
       portGroups: [
         {
           extendable: false,
@@ -80,6 +84,7 @@ const mathNodeMeta: I.NodeCategoryMeta = {
     {
       type: I.NodeType.LOGICAL,
       name: 'cmp',
+      label: '比较',
       desc: '判断多个值是否满足特定的大小关系。',
       portGroups: [
         {

@@ -6,6 +6,7 @@ const stringsNodeMeta: I.NodeCategoryMeta = {
     {
       type: I.NodeType.LOGICAL,
       name: 'toNumber',
+      label: '转数字',
       desc: '将输入值转换为数字。',
       portGroups: [
         {
@@ -21,6 +22,7 @@ const stringsNodeMeta: I.NodeCategoryMeta = {
     {
       type: I.NodeType.LOGICAL,
       name: 'toString',
+      label: '转字符串',
       desc: '将输入值转换为字符串。',
       portGroups: [
         {

@@ -44,15 +44,18 @@
 }
 
 .port {
-  fill: rgba(255,255,255,.7);
-  stroke: rgba(0,0,0,.4);
+  fill: rgba(190,190,190,.8);
+  stroke: #fff;
   stroke-width: .05;
 }
-.in-port {
-  fill: #1976d2;
+.port.in-port.connected {
+  fill: #1565c0;
 }
-.out-port {
-  fill: #d32f2f;
+.port.out-port.connected {
+  fill: #c62828;
+}
+.port.in-port.constant {
+  fill: #4f8b2f;
 }
 
 .port-text {

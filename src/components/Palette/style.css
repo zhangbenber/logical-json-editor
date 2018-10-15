@@ -1,6 +1,6 @@
 .box {
   background: #5c5c5c;
-  outline: 1px solid #555;
+  outline: 1px solid #4c4c4c;
   border: 1px solid #777;
   position: relative;
   width: 100%;
@@ -15,8 +15,7 @@
   height: 28px;
   padding: 0 8px;
   outline: 1px solid #666;
-  border: solid #393939;
-  border-width: 0 1px 1px 0;
+  border-bottom: 1px solid #393939;
   text-shadow: 0 -1px #111;
 }
 
@@ -27,6 +26,6 @@
   right: 0;
   bottom: 0;
   color: #ccc;
-  border: solid #555;
-  border-width: 0 1px 1px 0;
+  border: 1px solid #555;
+  border-top: none;
 }
