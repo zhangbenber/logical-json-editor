@@ -19,7 +19,8 @@ export enum PortType {
 
 export enum MouseMovmentType {
   NONE,
-  DRAG_NODE,
+  MOVE_NODE,
+  CREATE_LINK,
 }
 
 export interface Graph {
@@ -35,6 +36,7 @@ export interface Port {
 }
 
 export interface Node {
+  id: number;
   type: NodeType;
   name: string;
   x: number;
@@ -70,6 +72,7 @@ export interface MouseMovment {
   y: number;
   startX: number;
   startY: number;
+  data?: any;
 }
 
 export interface Sheet {

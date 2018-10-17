@@ -9,7 +9,7 @@
 }
 
 .title {
-  background: linear-gradient(top, #5a5a5a, #484848);
+  background: linear-gradient(to bottom, #5a5a5a, #484848);
   color: #fff;
   line-height: 28px;
   height: 28px;

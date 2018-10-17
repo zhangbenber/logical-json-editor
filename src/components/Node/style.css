@@ -70,6 +70,17 @@
   text-anchor: end;
 }
 
+.port-indicator {
+  cursor: default;
+}
+.port-indicator rect, .port-indicator circle {
+  fill: transparent;
+}
+.port-indicator:hover circle {
+  stroke: #ff9800;
+  stroke-width: .075;
+}
+
 .split {
   fill: #999;
 }

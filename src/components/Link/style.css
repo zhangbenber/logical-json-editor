@@ -3,10 +3,17 @@
   100% { stroke-dashoffset: 0; }
 }
 
+.ghost {
+  pointer-events: none;
+}
+
 .link {
   stroke: #fff;
   stroke-width: .07;
   fill: none;
+}
+.shadow .link {
+  stroke: rgba(255, 255, 255, .6);
 }
 
 .box:hover .link {

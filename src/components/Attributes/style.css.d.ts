@@ -5,6 +5,3 @@ export const groupItem: string;
 export const extendable: string;
 export const action: string;
 export const actionBar: string;
-export const port: string;
-export const portConn: string;
-export const portConstant: string;

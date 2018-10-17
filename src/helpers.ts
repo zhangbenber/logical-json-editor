@@ -21,7 +21,9 @@ function getDefaultPorts(meta: I.NodeMeta) {
 
 export function createNode(graph: I.Graph, meta: I.NodeMeta, x?: number, y?: number) {
   const isIONode: boolean = meta.type === I.NodeType.INPUT || meta.type === I.NodeType.OUTPUT;
+  const id = graph.nodes.length;
   const node: I.Node = {
+    id,
     type: meta.type,
     name: meta.name,
     x: x || 0,
@@ -33,7 +35,6 @@ export function createNode(graph: I.Graph, meta: I.NodeMeta, x?: number, y?: num
     portMap: {}
   };
   graph.nodes.push(node);
-  const id = graph.nodes.length - 1;
   if (isIONode) {
     setPorts(node, [{
       name: meta.type === I.NodeType.INPUT ? 'out' : 'in',

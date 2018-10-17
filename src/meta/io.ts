@@ -12,7 +12,7 @@ const ioNodeMeta: I.NodeCategoryMeta = {
         {
           extendable: false,
           ports: [
-            { name: 'out', direction: I.PortDirection.OUT, type: I.PortType.ANY, desc: '从外部传入的值。' }
+            { name: 'out', direction: I.PortDirection.OUT, type: I.PortType.ANY, desc: '从外部传入的值' }
           ]
         }
       ]
@@ -27,7 +27,7 @@ const ioNodeMeta: I.NodeCategoryMeta = {
         {
           extendable: false,
           ports: [
-            { name: 'in', direction: I.PortDirection.IN, type: I.PortType.ANY, desc: '向外部输出的值。' }
+            { name: 'in', direction: I.PortDirection.IN, type: I.PortType.ANY, desc: '向外部输出的值' }
           ]
         }
       ]

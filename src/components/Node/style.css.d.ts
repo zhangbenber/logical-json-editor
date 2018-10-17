@@ -11,6 +11,7 @@ export const connected: string;
 export const outPort: string;
 export const constant: string;
 export const portText: string;
+export const portIndicator: string;
 export const split: string;
 export const input: string;
 export const output: string;

@@ -13,13 +13,13 @@ const mathNodeMeta: I.NodeCategoryMeta = {
           extendable: true,
           defaultPairs: 2,
           ports: [
-            { name: 'in', direction: I.PortDirection.IN, type: I.PortType.NUMBER, desc: '输入若干个数值。' },
+            { name: 'in', direction: I.PortDirection.IN, type: I.PortType.NUMBER, desc: '输入若干个数值' },
           ]
         },
         {
           extendable: false,
           ports: [
-            { name: 'out', direction: I.PortDirection.OUT, type: I.PortType.NUMBER, desc: '输出总和。' },
+            { name: 'out', direction: I.PortDirection.OUT, type: I.PortType.NUMBER, desc: '输出总和' },
           ]
         }
       ]
@@ -34,9 +34,9 @@ const mathNodeMeta: I.NodeCategoryMeta = {
         {
           extendable: false,
           ports: [
-            { name: 'a', direction: I.PortDirection.IN, type: I.PortType.NUMBER, desc: '被减数。' },
-            { name: 'b', direction: I.PortDirection.IN, type: I.PortType.NUMBER, desc: '减数。' },
-            { name: 'out', direction: I.PortDirection.OUT, type: I.PortType.NUMBER, desc: '输出差值。' },
+            { name: 'a', direction: I.PortDirection.IN, type: I.PortType.NUMBER, desc: '被减数' },
+            { name: 'b', direction: I.PortDirection.IN, type: I.PortType.NUMBER, desc: '减数' },
+            { name: 'out', direction: I.PortDirection.OUT, type: I.PortType.NUMBER, desc: '输出差值' },
           ]
         }
       ]
@@ -52,13 +52,13 @@ const mathNodeMeta: I.NodeCategoryMeta = {
           extendable: true,
           defaultPairs: 2,
           ports: [
-            { name: 'in', direction: I.PortDirection.IN, type: I.PortType.NUMBER, desc: '输入若干个数值。' },
+            { name: 'in', direction: I.PortDirection.IN, type: I.PortType.NUMBER, desc: '输入若干个数值' },
           ]
         },
         {
           extendable: false,
           ports: [
-            { name: 'out', direction: I.PortDirection.OUT, type: I.PortType.NUMBER, desc: '输出乘积。' },
+            { name: 'out', direction: I.PortDirection.OUT, type: I.PortType.NUMBER, desc: '输出乘积' },
           ]
         }
       ]
@@ -73,9 +73,9 @@ const mathNodeMeta: I.NodeCategoryMeta = {
         {
           extendable: false,
           ports: [
-            { name: 'a', direction: I.PortDirection.IN, type: I.PortType.NUMBER, desc: '分子。' },
-            { name: 'b', direction: I.PortDirection.IN, type: I.PortType.NUMBER, desc: '分母。' },
-            { name: 'out', direction: I.PortDirection.OUT, type: I.PortType.NUMBER, desc: '输出比值。' },
+            { name: 'a', direction: I.PortDirection.IN, type: I.PortType.NUMBER, desc: '分子' },
+            { name: 'b', direction: I.PortDirection.IN, type: I.PortType.NUMBER, desc: '分母' },
+            { name: 'out', direction: I.PortDirection.OUT, type: I.PortType.NUMBER, desc: '输出比值' },
           ]
         }
       ]
@@ -91,14 +91,14 @@ const mathNodeMeta: I.NodeCategoryMeta = {
           extendable: true,
           defaultPairs: 2,
           ports: [
-            { name: 'in', direction: I.PortDirection.IN, type: I.PortType.NUMBER, desc: '输入若干个数值。' },
+            { name: 'in', direction: I.PortDirection.IN, type: I.PortType.NUMBER, desc: '输入若干个数值' },
           ]
         },
         {
           extendable: false,
           ports: [
-            { name: 'opt', direction: I.PortDirection.IN, type: I.PortType.STRING, desc: '比较方法。' },
-            { name: 'out', direction: I.PortDirection.OUT, type: I.PortType.BOOLEAN, desc: '输出布尔值，表示大小关系是否成立。' },
+            { name: 'opt', direction: I.PortDirection.IN, type: I.PortType.STRING, desc: '比较方法' },
+            { name: 'out', direction: I.PortDirection.OUT, type: I.PortType.BOOLEAN, desc: '输出布尔值，表示大小关系是否成立' },
           ]
         }
       ]

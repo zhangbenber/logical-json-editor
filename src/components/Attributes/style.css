@@ -62,33 +62,3 @@
 /* .group.extendable:hover .action {
   display: block;
 } */
-
-.port {
-  padding: 4px 8px;
-  background: #666;
-  margin: 3px 0;
-}
-.port:hover {
-  background: #6a6a6a;
-}
-.port em {
-  color: #aaa;
-}
-.port-conn {
-  height: 20px;
-  display: flex;
-  line-height: 20px;
-}
-.port-constant {
-  margin-left: 8px;
-  text-decoration: none;
-  color: #ffc107;
-  border-bottom: 1px dotted #ffc107;
-  cursor: pointer;
-  height: 19px;
-}
-.port-constant:hover {
-  text-decoration: none;
-  color: #ffd54f;
-  border-color: #ffd54f;
-}

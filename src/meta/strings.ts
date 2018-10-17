@@ -13,13 +13,13 @@ const stringsNodeMeta: I.NodeCategoryMeta = {
           extendable: true,
           defaultPairs: 2,
           ports: [
-            { name: 'in', direction: I.PortDirection.IN, type: I.PortType.STRING, desc: '输入的多个字符串。' },
+            { name: 'in', direction: I.PortDirection.IN, type: I.PortType.STRING, desc: '输入的多个字符串' },
           ]
         },
         {
           extendable: false,
           ports: [
-            { name: 'out', direction: I.PortDirection.OUT, type: I.PortType.STRING, desc: '输出字符串。' },
+            { name: 'out', direction: I.PortDirection.OUT, type: I.PortType.STRING, desc: '输出字符串' },
           ]
         }
       ]

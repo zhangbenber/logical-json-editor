@@ -13,13 +13,13 @@ const logicNodeMeta: I.NodeCategoryMeta = {
           extendable: true,
           defaultPairs: 2,
           ports: [
-            { name: 'in', direction: I.PortDirection.IN, type: I.PortType.BOOLEAN, desc: '输入若干个布尔值。' },
+            { name: 'in', direction: I.PortDirection.IN, type: I.PortType.BOOLEAN, desc: '输入若干个布尔值' },
           ]
         },
         {
           extendable: false,
           ports: [
-            { name: 'out', direction: I.PortDirection.OUT, type: I.PortType.BOOLEAN, desc: '输出布尔值。' },
+            { name: 'out', direction: I.PortDirection.OUT, type: I.PortType.BOOLEAN, desc: '输出布尔值' },
           ]
         }
       ]
@@ -35,13 +35,13 @@ const logicNodeMeta: I.NodeCategoryMeta = {
           extendable: true,
           defaultPairs: 2,
           ports: [
-            { name: 'in', direction: I.PortDirection.IN, type: I.PortType.BOOLEAN, desc: '输入若干个布尔值。' },
+            { name: 'in', direction: I.PortDirection.IN, type: I.PortType.BOOLEAN, desc: '输入若干个布尔值' },
           ]
         },
         {
           extendable: false,
           ports: [
-            { name: 'out', direction: I.PortDirection.OUT, type: I.PortType.BOOLEAN, desc: '输出布尔值。' },
+            { name: 'out', direction: I.PortDirection.OUT, type: I.PortType.BOOLEAN, desc: '输出布尔值' },
           ]
         }
       ]
@@ -56,8 +56,8 @@ const logicNodeMeta: I.NodeCategoryMeta = {
         {
           extendable: false,
           ports: [
-            { name: 'in', direction: I.PortDirection.IN, type: I.PortType.BOOLEAN, desc: '输入布尔值。' },
-            { name: 'out', direction: I.PortDirection.OUT, type: I.PortType.BOOLEAN, desc: '输出布尔值，其值与输入相反。' },
+            { name: 'in', direction: I.PortDirection.IN, type: I.PortType.BOOLEAN, desc: '输入布尔值' },
+            { name: 'out', direction: I.PortDirection.OUT, type: I.PortType.BOOLEAN, desc: '输出布尔值，其值与输入相反' },
           ]
         }
       ]
@@ -73,15 +73,15 @@ const logicNodeMeta: I.NodeCategoryMeta = {
           extendable: true,
           defaultPairs: 2,
           ports: [
-            { name: 'in', direction: I.PortDirection.IN, type: I.PortType.ANY, desc: '一系列输入值。' },
-            { name: 'c', direction: I.PortDirection.IN, type: I.PortType.BOOLEAN, desc: '与输入值对应的一系列布尔条件。' },
+            { name: 'in', direction: I.PortDirection.IN, type: I.PortType.ANY, desc: '一系列输入值' },
+            { name: 'c', direction: I.PortDirection.IN, type: I.PortType.BOOLEAN, desc: '与输入值对应的一系列布尔条件' },
           ]
         },
         {
           extendable: false,
           ports: [
-            { name: 'else', direction: I.PortDirection.IN, type: I.PortType.ANY, desc: '默认值，作为所有条件均不满足时的输出。' },
-            { name: 'out', direction: I.PortDirection.OUT, type: I.PortType.ANY, desc: '输出值。' },
+            { name: 'else', direction: I.PortDirection.IN, type: I.PortType.ANY, desc: '默认值，作为所有条件均不满足时的输出' },
+            { name: 'out', direction: I.PortDirection.OUT, type: I.PortType.ANY, desc: '输出值' },
           ]
         }
       ]

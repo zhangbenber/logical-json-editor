@@ -18,7 +18,6 @@ export default class Attributes extends React.PureComponent<{
     const isInput = port.direction === I.PortDirection.IN;
     const connected = !!port.linkIds.length;
     const isConstant = port.constant !== undefined;
-    console.log(port.constant)
     return <div
       className={classnames(styles.port)}
     >

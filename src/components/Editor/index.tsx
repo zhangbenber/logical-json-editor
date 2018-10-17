@@ -18,7 +18,7 @@ const dimension: I.Dimension = {
   scale: 25,
 }
 
-class App extends React.Component<{
+class App extends React.PureComponent<{
   className?: any;
 }> {
   public state = {

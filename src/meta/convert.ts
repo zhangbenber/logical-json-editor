@@ -12,8 +12,8 @@ const stringsNodeMeta: I.NodeCategoryMeta = {
         {
           extendable: false,
           ports: [
-            { name: 'in', direction: I.PortDirection.IN, type: I.PortType.ANY, desc: '输入值。' },
-            { name: 'out', direction: I.PortDirection.OUT, type: I.PortType.NUMBER, desc: '输出数字。' },
+            { name: 'in', direction: I.PortDirection.IN, type: I.PortType.ANY, desc: '输入值' },
+            { name: 'out', direction: I.PortDirection.OUT, type: I.PortType.NUMBER, desc: '输出数字' },
           ]
         }
       ]
@@ -28,8 +28,8 @@ const stringsNodeMeta: I.NodeCategoryMeta = {
         {
           extendable: false,
           ports: [
-            { name: 'in', direction: I.PortDirection.IN, type: I.PortType.ANY, desc: '输入值。' },
-            { name: 'out', direction: I.PortDirection.OUT, type: I.PortType.STRING, desc: '输出字符串。' },
+            { name: 'in', direction: I.PortDirection.IN, type: I.PortType.ANY, desc: '输入值' },
+            { name: 'out', direction: I.PortDirection.OUT, type: I.PortType.STRING, desc: '输出字符串' },
           ]
         }
       ]

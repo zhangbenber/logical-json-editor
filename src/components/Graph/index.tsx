@@ -37,7 +37,9 @@ export default class Graph extends React.PureComponent<{
   }
 
   private box: HTMLDivElement | null = null;
-  private nextMouseMovment: I.MouseMovmentType = I.MouseMovmentType.NONE;
+  private nextMouseMovmentType: I.MouseMovmentType = I.MouseMovmentType.NONE;
+  private nextMouseMovmentData?: any;
+  private nextMouseMovmentHandleStopped: boolean = false;
 
   constructor(props: any) {
     super(props);
@@ -49,9 +51,11 @@ export default class Graph extends React.PureComponent<{
     this.handleDragOver = this.handleDragOver.bind(this);
     this.handleDrop = this.handleDrop.bind(this);
     this.handleStartMouseMovment = this.handleStartMouseMovment.bind(this);
+    this.handleonUpdateMouseMovementData = this.handleonUpdateMouseMovementData.bind(this);
   }
 
   public render() {
+    const { mouseMovment } = this.state;
     const { nodes, links } = this.props.graph;
     return (
       <div
@@ -83,8 +87,9 @@ export default class Graph extends React.PureComponent<{
               id={id}
               node={node}
               key={id}
-              mouseMovment={this.state.mouseMovment}
+              mouseMovment={mouseMovment}
               onStartMouseMovment={this.handleStartMouseMovment}
+              onUpdateMouseMovementData={this.handleonUpdateMouseMovementData}
               onSelect={this.handleSelectNode}
             /> : null)
           }
@@ -92,12 +97,18 @@ export default class Graph extends React.PureComponent<{
             link ? <Link
               link={link}
               key={link.id}
-              fromNode={nodes[link.from.nodeId] as I.Node}
-              toNode={nodes[link.to.nodeId] as I.Node}
-              mouseMovment={this.state.mouseMovment}
+              nodes={nodes}
+              mouseMovment={mouseMovment}
               onStartMouseMovment={this.handleStartMouseMovment}
+              // onUpdateMouseMovementData={this.handleonUpdateMouseMovementData}
             /> : null)
           }
+          {mouseMovment.type === I.MouseMovmentType.CREATE_LINK ? <Link
+            link={mouseMovment.data}
+            nodes={nodes}
+            mouseMovment={mouseMovment}
+            isShadow
+          /> : null}
         </svg>
       </div>
     );
@@ -164,24 +175,28 @@ export default class Graph extends React.PureComponent<{
     const cords = this.getMouseCords(e);
     this.setState({
       mouseMovment: Object.assign({
-        type: this.nextMouseMovment,
+        type: this.nextMouseMovmentType,
         startX: cords.x,
         startY: cords.y,
+        data: this.nextMouseMovmentData,
       }, cords)
     });
   }
 
   private handleMouseMove: React.MouseEventHandler = e => {
-    const cords = this.getMouseCords(e);
-    this.setState({
-      mouseMovment: Object.assign({}, this.state.mouseMovment, cords)
-    });
+    if (this.state.mouseMovment.type !== I.MouseMovmentType.NONE) {
+      const cords = this.getMouseCords(e);
+      this.setState({
+        mouseMovment: Object.assign({}, this.state.mouseMovment, cords)
+      });
+    }
   }
 
   private handleMouseUp: React.MouseEventHandler = e => {
     const { mouseMovment } = this.state;
+    const { data } = mouseMovment;
     switch (mouseMovment.type) {
-      case I.MouseMovmentType.DRAG_NODE:
+      case I.MouseMovmentType.MOVE_NODE:
         this.apply(state => {
           state.nodes.forEach(node => {
             if (node && node.selected) {
@@ -191,10 +206,21 @@ export default class Graph extends React.PureComponent<{
           })
         });
         break;
+
+      case I.MouseMovmentType.CREATE_LINK:
+        if (!data.pending) {
+          this.apply(state => {
+            helpers.createLink(state, data.from, mouseMovment.data.to);
+          });
+        }
+        break;
     }
     this.setState({
       mouseMovment: nullMouseMovment
     });
+    this.nextMouseMovmentType = I.MouseMovmentType.NONE;
+    this.nextMouseMovmentData = undefined;
+    this.nextMouseMovmentHandleStopped = false;
   }
 
   private handleDragOver: React.DragEventHandler = e => {
@@ -213,8 +239,19 @@ export default class Graph extends React.PureComponent<{
     });
   }
 
-  private handleStartMouseMovment(type: I.MouseMovmentType) {
-    this.nextMouseMovment = type;
+  private handleStartMouseMovment(type: I.MouseMovmentType, data?: any, stopPropagation?: boolean) {
+    if (this.nextMouseMovmentHandleStopped) {
+      return;
+    }
+    this.nextMouseMovmentType = type;
+    this.nextMouseMovmentData = data;
+    this.nextMouseMovmentHandleStopped = !!stopPropagation;
+  }
+
+  private handleonUpdateMouseMovementData(data?: any) {
+    this.setState({
+      mouseMovment: { ...this.state.mouseMovment, data }
+    });
   }
 
   private apply(producer: (oldState: I.Graph) => any) {
