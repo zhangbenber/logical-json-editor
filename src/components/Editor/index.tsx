@@ -6,9 +6,11 @@ import * as I from '../../typings';
 
 import * as styles from './style.css';
 
+import Palette from '../Palette';
 import Attributes from '../Attributes';
 import Graph from '../Graph';
 import Library from '../Library';
+import ToolBar from '../ToolBar';
 
 import nodeMeta from 'src/meta';
 
@@ -67,20 +69,32 @@ class App extends React.PureComponent<{
   public render() {
     return (
       <div className={classnames(styles.editor, this.props.className || '')}>
-        <Library
-          className={styles.library}
-          items={nodeMeta}
-        />
-        <Graph
-          graph={this.state.graph}
-          onEdit={this.handleEdit}
-          dimension={dimension}
-          className={styles.graph}
-        />
-        <Attributes
-          className={styles.attributes}
-          graph={this.state.graph}
-        />
+        <ToolBar className={styles.toolbar}></ToolBar>
+        <div className={styles.workspace}>
+          <Library
+            className={styles.library}
+            items={nodeMeta}
+          />
+          <div className={styles.graph}>
+            <div className={styles.graphTitle}>
+              <Palette tabs={['文档 1', '文档 2', '文档 3']}>
+                <Graph
+                  className={styles.graphBox}
+                  graph={this.state.graph}
+                  onEdit={this.handleEdit}
+                  dimension={dimension}
+                />
+              </Palette>
+            </div>
+            <div className={styles.graphDebugger}>
+              <Palette title="调试" />
+            </div>
+          </div>
+          <Attributes
+            className={styles.attributes}
+            graph={this.state.graph}
+          />
+        </div>
       </div>
     );
   }

@@ -107,6 +107,10 @@ export default class Node extends React.PureComponent<{
   }
 
   private renderPortDot(port: I.Port, x: number, y: number) {
+    const connectable = port.direction === I.PortDirection.OUT || (
+      port.constant === undefined &&
+      !port.linkIds.length
+    );
     return {
       back: <circle
         cx={x} cy=".5" r=".15"
@@ -120,18 +124,16 @@ export default class Node extends React.PureComponent<{
           }
         )}
       />,
-      front: <g
-        className={styles.portIndicator}
+      front: connectable ? <g
+        className={classnames(styles.portIndicator)}
         onMouseDown={this.handlePortMouseDown.bind(this, port)}
         onMouseEnter={this.handlePortMouseEnter.bind(this, port)}
         onMouseLeave={this.handlePortMouseLeave.bind(this, port)}
       >
-        <rect
-          x={x - .4} y={y - .4} width=".8" height=".8"
-        />
-        <circle
-          cx={x} cy={y} r=".21"
-        />
+        <rect x={x - .4} y={y - .4} width=".8" height=".8" />
+        <circle cx={x} cy={y} r=".21" />
+      </g> : <g className={classnames(styles.portIndicator)}>
+        <rect x={x - .4} y={y - .4} width=".8" height=".8" />
       </g>
     };
   }
@@ -167,12 +169,7 @@ export default class Node extends React.PureComponent<{
     const { mouseMovment } = this.props;
     if (mouseMovment.type === I.MouseMovmentType.CREATE_LINK) {
       const { data } = mouseMovment;
-      if (
-        data.startDirection !== port.direction && (port.direction === I.PortDirection.OUT || (
-          port.constant === undefined &&
-          !port.linkIds.length
-        ))
-      ) {
+      if (data.startDirection !== port.direction) {
         const ref: I.PortRef = {
           nodeId: this.props.node.id,
           portName: port.name,

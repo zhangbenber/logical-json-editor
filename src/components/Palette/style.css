@@ -1,7 +1,8 @@
 .box {
   background: #5c5c5c;
   outline: 1px solid #4c4c4c;
-  border: 1px solid #777;
+  border: 1px solid #707070;
+  border-top: none;
   position: relative;
   width: 100%;
   height: 100%;
@@ -9,19 +10,51 @@
 }
 
 .title {
-  background: linear-gradient(to bottom, #5a5a5a, #484848);
+  background: linear-gradient(to bottom, #505050, #484848);
   color: #fff;
-  line-height: 28px;
-  height: 28px;
-  padding: 0 8px;
-  outline: 1px solid #666;
+  line-height: 25px;
+  height: 26px;
+  box-shadow: inset 0 1px #707070;
+  outline: 1px solid #696969;
   border-bottom: 1px solid #393939;
   text-shadow: 0 -1px #111;
+}
+.title span {
+  display: inline-block;
+  padding: 0 8px;
+}
+
+.title .tab {
+  position: relative;
+  border: 1px solid #393939;
+  border-top: none;
+  margin-right: -1px;
+  cursor: default;
+  padding-right: 20px;
+}
+.tab::after {
+  font-family: Webdings;
+  font-size: 10px;
+  content: 'r';
+  opacity: 0.3;
+  position: absolute;
+  right: 6px;
+  top: 1px;
+}
+.tab:hover {
+  border: 1px solid #393939;
+  border-top: none;
+  margin-right: -1px;
+  background: rgba(255,255,255,.07);
+}
+.tab.active {
+  background: linear-gradient(to bottom, #777, #666);
+  box-shadow: inset 0 1px #999;
 }
 
 .content {
   position: absolute;
-  top: 28px;
+  top: 26px;
   left: 0;
   right: 0;
   bottom: 0;

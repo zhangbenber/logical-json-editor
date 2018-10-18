@@ -1,0 +1,35 @@
+.bar {
+  position: relative;
+  z-index: 20;
+  height: 36px;
+  background: #5c5c5c;
+  border-bottom: 1px solid #393939;
+  box-shadow: 0 1px 0 rgba(0,0,0,.1);
+  color: #eee;
+  text-shadow: 0 -1px 0 #000;
+}
+
+.logo {
+  display: inline-block;
+  line-height: 36px;
+  height: 35px;
+  padding: 0 5px 0 8px;
+  opacity: 0.6;
+  cursor: pointer;
+  vertical-align: middle;
+}
+.logo strong {
+  font-size: 16px;
+}
+.logo:hover {
+  opacity: 0.8;
+}
+
+.split {
+  display: inline-block;
+  height: 23px;
+  margin: 0 5px;
+  width: 1px;
+  background: #444;
+  vertical-align: middle;
+}

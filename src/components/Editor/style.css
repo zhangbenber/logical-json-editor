@@ -1,20 +1,50 @@
 .editor {
   display: flex;
+  flex-direction: column;
+}
+
+.toolbar {
+  flex: none;
+}
+
+.workspace {
+  display: flex;
+  height: 0;
+  flex: 1;
 }
 
 .graph {
+  display: flex;
+  flex-direction: column;
   width: 0;
   flex: 1;
+}
+.graph-title {
+  height: 0;
+  flex: 1;
+  margin: 0 1px 1px;
+}
+.graph-box {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+.graph-debugger {
+  height: 200px;
+  flex: none;
+  margin: 0 1px;
 }
 
 .library {
   width: 200px;
   height: 100%;
-  /* flex: 0; */
+  flex: none;
 }
 
 .attributes {
   width: 260px;
   height: 100%;
-  /* flex: 0; */
+  flex: none;
 }
