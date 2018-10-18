@@ -5,7 +5,7 @@ import * as I from '../../../typings';
 import classnames from 'classnames';
 import * as styles from './style.css';
 
-export default class Attributes extends React.PureComponent<{
+export default class AttributesPort extends React.PureComponent<{
   meta: I.PortMeta;
   port: I.Port;
 }> {
@@ -21,8 +21,8 @@ export default class Attributes extends React.PureComponent<{
     return <div
       className={classnames(styles.port)}
     >
-      <p><strong>{port.name} : </strong>{meta.desc}</p>
-      <p className={classnames(
+      <div><strong>{port.name} : </strong>{meta.desc}</div>
+      <div className={classnames(
         styles.conn,
         [styles.output, styles.input][+isInput],
         { [styles.connected]: connected, [styles.constant]: isConstant }
@@ -39,7 +39,7 @@ export default class Attributes extends React.PureComponent<{
             : null}
           </div>
         }
-      </p>
+      </div>
     </div>
   }
 

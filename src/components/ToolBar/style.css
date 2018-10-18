@@ -11,15 +11,21 @@
 
 .logo {
   display: inline-block;
+  width: 196px;
+  text-align: center;
   line-height: 36px;
   height: 35px;
-  padding: 0 5px 0 8px;
+  padding-left: 4px;
   opacity: 0.6;
   cursor: pointer;
   vertical-align: middle;
 }
 .logo strong {
   font-size: 16px;
+}
+.logo sup {
+  vertical-align: 6px;
+  opacity: 0.7;
 }
 .logo:hover {
   opacity: 0.8;

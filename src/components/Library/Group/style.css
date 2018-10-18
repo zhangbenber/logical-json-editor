@@ -7,7 +7,6 @@
 .title {
   background: #666;
   font-weight: bold;
-  cursor: default;
 }
 .title::before {
   font-family: Webdings;
@@ -34,7 +33,6 @@
 
 .item {
   padding-left: 16px;
-  cursor: default;
 }
 .item:hover {
   background: #606060;

@@ -37,3 +37,9 @@
   font-family: Wingdings;
   content: '<';
 }
+
+.code::before {
+  font-size: 10px;
+  content: '{ }';
+  vertical-align: 5px;
+}

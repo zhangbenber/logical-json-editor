@@ -110,3 +110,15 @@ export interface PortMeta {
   type: PortType;
   desc: string;
 }
+
+export type LogicalJSONIONode = [number, string];
+export type LogicalJSONLogicalNode = [number, string, object?];
+export type LogicalJSONPort = number | [number, string];
+export type LogicalJSONLink = [LogicalJSONPort, LogicalJSONPort];
+
+export interface LogicalJSON {
+  i: LogicalJSONIONode[];
+  o: LogicalJSONIONode[];
+  n: LogicalJSONLogicalNode[];
+  l: LogicalJSONLink[];
+}

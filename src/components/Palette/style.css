@@ -1,6 +1,6 @@
 .box {
   background: #5c5c5c;
-  outline: 1px solid #4c4c4c;
+  outline: 1px solid #1c1c1c;
   border: 1px solid #707070;
   border-top: none;
   position: relative;
@@ -11,7 +11,7 @@
 
 .title {
   background: linear-gradient(to bottom, #505050, #484848);
-  color: #fff;
+  color: #eee;
   line-height: 25px;
   height: 26px;
   box-shadow: inset 0 1px #707070;
@@ -29,8 +29,8 @@
   border: 1px solid #393939;
   border-top: none;
   margin-right: -1px;
-  cursor: default;
   padding-right: 20px;
+  color: #ccc;
 }
 .tab::after {
   font-family: Webdings;
@@ -45,11 +45,14 @@
   border: 1px solid #393939;
   border-top: none;
   margin-right: -1px;
-  background: rgba(255,255,255,.07);
+  background: rgba(255,255,255,.05);
 }
 .tab.active {
   background: linear-gradient(to bottom, #777, #666);
   box-shadow: inset 0 1px #999;
+  border-bottom-color: #4c4c4c;
+  color: #eee;
+  text-shadow: 0 -1px #333;
 }
 
 .content {

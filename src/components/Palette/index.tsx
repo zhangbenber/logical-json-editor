@@ -19,7 +19,7 @@ export default class Node extends React.PureComponent<{
         {(this.props.tabs || []).map ((tab, i) => 
           <span className={classnames(
             styles.tab,
-            { [styles.active]: i === 1 },
+            { [styles.active]: i === 0 },
           )}>
             {tab}
           </span>

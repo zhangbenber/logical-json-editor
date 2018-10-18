@@ -30,9 +30,67 @@ class App extends React.PureComponent<{
     } as I.Graph
   }
 
+  private graph: Graph | null;
+
+  private toolBarActions: { [type: string]: () => void } = {
+    code: () => {
+      const { graph } = this.state;
+      const nodes = graph.nodes.filter(n => {
+        if (!n) {
+          return false;
+        }
+        return n.ports.some(p => !!p.linkIds.length);
+      }) as I.Node[];
+      const links = graph.links.filter(l => !!l) as I.Link[];
+      const nodeIds: { [id: number]: number } = {};
+      function mapPortRef(ref: I.PortRef): I.LogicalJSONPort {
+        const node = graph.nodes[ref.nodeId] as I.Node;
+        const id = nodeIds[node.id];
+        if (node.type !== I.NodeType.LOGICAL) {
+          return id;
+        } else {
+          return [id, ref.portName];
+        }
+      }
+      nodes.forEach((n, i) => {
+        nodeIds[n.id] = i;
+      });
+      const result: I.LogicalJSON = {
+        i: [],
+        o: [],
+        n: [],
+        l: links.map(l => [mapPortRef(l.from), mapPortRef(l.to)] as [I.LogicalJSONPort, I.LogicalJSONPort])
+      };
+      nodes.forEach(n => {
+        const id = nodeIds[n.id];
+        switch (n.type) {
+          case I.NodeType.INPUT:
+            result.i.push([id, n.name]);
+            break;
+          case I.NodeType.OUTPUT:
+            result.o.push([id, n.name]);
+            break;
+          default:
+            const constant = {};
+            let hasConstant = false;
+            n.ports.forEach(p => {
+              if (p.constant !== undefined) {
+                constant[p.name] = p.constant;
+                hasConstant = true;
+              }
+            });
+            result.n.push([id, n.name, hasConstant ? constant : undefined]);
+        }
+      });
+      alert(JSON.stringify(result));
+    }
+  }
+
   constructor(props: any) {
     super(props);
+    this.graphMounted = this.graphMounted.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
+    this.handleButtonClick = this.handleButtonClick.bind(this);
 
     const graph: I.Graph = {
       nodes: [],
@@ -69,7 +127,7 @@ class App extends React.PureComponent<{
   public render() {
     return (
       <div className={classnames(styles.editor, this.props.className || '')}>
-        <ToolBar className={styles.toolbar}></ToolBar>
+        <ToolBar className={styles.toolbar} onButtonClick={this.handleButtonClick} />
         <div className={styles.workspace}>
           <Library
             className={styles.library}
@@ -83,6 +141,7 @@ class App extends React.PureComponent<{
                   graph={this.state.graph}
                   onEdit={this.handleEdit}
                   dimension={dimension}
+                  ref={this.graphMounted}
                 />
               </Palette>
             </div>
@@ -104,6 +163,20 @@ class App extends React.PureComponent<{
       graph: reducer(this.state.graph)
     });
   }
+
+  private graphMounted(ref: Graph | null) {
+    this.graph = ref;
+  }
+
+  private handleButtonClick(type: string) {
+    if (this.graph) {
+      this.graph.onButtonClick(type);
+    }
+    if (this.toolBarActions[type]) {
+      this.toolBarActions[type]();
+    }
+  }
+
 }
 
 export default App;

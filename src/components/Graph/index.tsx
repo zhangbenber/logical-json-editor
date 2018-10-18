@@ -114,6 +114,10 @@ export default class Graph extends React.PureComponent<{
     );
   }
 
+  public onButtonClick(type: string) {
+    console.log(type);
+  }
+
   private renderDefs() {
     return <defs>
       <pattern id="grid" width="1" height="1" patternUnits="userSpaceOnUse">
