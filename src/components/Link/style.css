@@ -17,7 +17,6 @@
 }
 
 .box:hover .link {
-  stroke: #fff;
   stroke-dasharray: .3, .2;
   animation: flow .6s linear infinite;
 }
@@ -32,11 +31,13 @@
   stroke: rgba(28, 115, 187, .4);
 }
 
-.box:active .link {
+.box:active .link, .box.selected .link {
   stroke-width: .1;
+  /* stroke-dasharray: .3, .2;
+  animation: flow .6s linear infinite; */
 }
 
-.box:active .indicator {
+.box:active .indicator, .box.selected .indicator {
   stroke: rgb(28, 115, 187);
   stroke-width: .25;
 }

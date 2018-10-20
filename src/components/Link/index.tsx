@@ -4,7 +4,7 @@ import * as I from '../../typings';
 import classnames from 'classnames';
 import * as styles from './style.css';
 
-export default class Node extends React.PureComponent<{
+export default class Link extends React.PureComponent<{
   link: I.Link,
   nodes: Array<I.Node | undefined>,
   mouseMovment: I.MouseMovment;
@@ -20,7 +20,7 @@ export default class Node extends React.PureComponent<{
   public render() {
     const { link, nodes, mouseMovment, isShadow } = this.props;
     
-    const { from, to } = link;
+    const { from, to, selected } = link;
     const fromNode = nodes[from.nodeId]!;
     const toNode = nodes[to.nodeId]!;
     const fromIndex = fromNode.collapsed ? -1.05 : fromNode.portMap[from.portName];
@@ -58,7 +58,8 @@ export default class Node extends React.PureComponent<{
       <g
         className={classnames(styles.box, {
           [styles.shadow]: isShadow && mouseMovment.data.pending,
-          [styles.ghost]: isShadow
+          [styles.selected]: selected,
+          [styles.ghost]: isShadow,
         })}
         onMouseDown={this.handleMouseDown}
       >

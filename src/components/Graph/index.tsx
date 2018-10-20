@@ -44,10 +44,13 @@ export default class Graph extends React.PureComponent<{
   constructor(props: any) {
     super(props);
     this.handleSelectNode = this.handleSelectNode.bind(this);
-    this.handleDeselectAll = this.handleDeselectAll.bind(this);
+    this.handleSelectLink = this.handleSelectLink.bind(this);
     this.handleMouseDown = this.handleMouseDown.bind(this);
     this.handleMouseMove = this.handleMouseMove.bind(this);
     this.handleMouseUp = this.handleMouseUp.bind(this);
+    this.handleMouseDownOnCanvas = this.handleMouseDownOnCanvas.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.handleKeyUp = this.handleKeyUp.bind(this);
     this.handleDragOver = this.handleDragOver.bind(this);
     this.handleDrop = this.handleDrop.bind(this);
     this.handleStartMouseMovment = this.handleStartMouseMovment.bind(this);
@@ -64,8 +67,11 @@ export default class Graph extends React.PureComponent<{
         onMouseDown={this.handleMouseDown}
         onMouseMove={this.handleMouseMove}
         onMouseUp={this.handleMouseUp}
+        onKeyDown={this.handleKeyDown}
+        onKeyUp={this.handleKeyUp}
         onDragOver={this.handleDragOver}
         onDrop={this.handleDrop}
+        tabIndex={1}
       >
         <svg
           className={styles.view}
@@ -80,7 +86,7 @@ export default class Graph extends React.PureComponent<{
             width="200"
             height="200"
             fill="url(#grid)"
-            onMouseDown={this.handleDeselectAll}
+            onMouseDown={this.handleMouseDownOnCanvas}
           />
           {nodes.map((node, id) => 
             node ? <Node
@@ -100,6 +106,7 @@ export default class Graph extends React.PureComponent<{
               nodes={nodes}
               mouseMovment={mouseMovment}
               onStartMouseMovment={this.handleStartMouseMovment}
+              onSelect={this.handleSelectLink}
               // onUpdateMouseMovementData={this.handleonUpdateMouseMovementData}
             /> : null)
           }
@@ -155,12 +162,19 @@ export default class Graph extends React.PureComponent<{
     }`
   }
 
-  private handleDeselectAll() {
+  private handleMouseDownOnCanvas: React.MouseEventHandler = (e) => {
+    if (e.ctrlKey || e.shiftKey || e.metaKey) {
+      return;
+    }
     this.apply(state => { reducersOf(state).deselectAll(); })
   }
 
   private handleSelectNode(id: number, preserve: boolean) {
     this.apply(state => { reducersOf(state).selectNode(id, preserve); })
+  }
+
+  private handleSelectLink(id: number, preserve: boolean) {
+    this.apply(state => { reducersOf(state).selectLink(id, preserve); })
   }
 
   private getMouseCords(e: React.MouseEvent) {
@@ -225,6 +239,21 @@ export default class Graph extends React.PureComponent<{
     this.nextMouseMovmentType = I.MouseMovmentType.NONE;
     this.nextMouseMovmentData = undefined;
     this.nextMouseMovmentHandleStopped = false;
+  }
+
+  private handleKeyDown: React.KeyboardEventHandler = e => {
+    console.log(e.keyCode);
+    switch (e.keyCode) {
+      case 8:
+      case 46:
+        e.preventDefault();
+        this.apply(state => reducersOf(state).deleteSelected());
+        break;
+    }
+  }
+
+  private handleKeyUp: React.KeyboardEventHandler = e => {
+    console.log(e.keyCode)
   }
 
   private handleDragOver: React.DragEventHandler = e => {
