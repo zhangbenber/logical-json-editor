@@ -1,0 +1,85 @@
+.mask {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(140,140,140,.4);
+  z-index: 30;
+}
+
+.box {
+  position: fixed;
+  background: #5c5c5c;
+  z-index: 32;
+  left: 50%;
+  top: 12%;
+  transform: translate(-50%, -5%);
+  border: 1px solid #3c3c3c;
+  box-shadow: 0 5px 50px rgba(0,0,0,.4);
+  overflow: hidden;
+  border-radius: 4px 4px 2px 2px;
+}
+
+.title {
+  text-align: center;
+  height: 30px;
+  line-height: 30px;
+  background: linear-gradient(to bottom, #505050, #484848);
+  box-shadow: inset 0 1px #707070;
+  outline: 1px solid #696969;
+  border: 1px solid #555;
+  border-bottom-color: #393939;
+  border-top: none;
+  border-radius: 2px 2px 0 0;
+  color: #eee;
+  text-shadow: 0 -1px #111;
+}
+.no-title .title {
+  box-shadow: inset 0 1px #666;
+  height: 8px;
+}
+
+.content {
+  border: 1px solid #6c6c6c;
+  border-top: none;
+}
+
+.children {
+  position: relative;
+}
+
+.buttons {
+  text-align: center;
+  padding: 0 8px 12px;
+}
+
+.button {
+  line-height: 24px;
+  height: 27px;
+  display: inline-block;
+  padding: 0 8px;
+  min-width: 60px;
+  margin: 0 6px;
+  border: 1px solid #333;
+  background: linear-gradient(to bottom, #707070, #606060);
+  border-radius: 2px;
+  color: #ddd;
+  text-shadow: 0 -1px #333;
+  outline: 1px solid rgba(255,255,255,.07);
+  outline-offset: -2px;
+  box-shadow: inset 0 1px #888, 0 1px #6c6c6c;
+}
+.button.primary {
+  border-color: #000;
+}
+.button:hover {
+  background: linear-gradient(to bottom, #767676, #666);
+}
+.button:focus {
+  box-shadow: inset 0 1px #888, 0 0 0 1px rgba(255,193,7, 0.75);
+}
+.button:active {
+  background: #4c4c4c;
+  box-shadow: 0 0 0 1px rgba(255,193,7, 0.75);
+}

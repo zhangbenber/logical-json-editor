@@ -48,3 +48,23 @@
   height: 100%;
   flex: none;
 }
+
+.dialog-export-textarea {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  padding: 2px 4px;
+  font-family: monospace;
+  background: #666;
+  border: 1px solid #4c4c4c;
+  color: #eee;
+  line-height: 14px;
+  user-select: all;
+  resize: none;
+}
+.dialog-export-textarea:focus {
+  border-color: #333;
+  box-shadow: 0 0 0 1px rgba(255,193,7, 0.75);
+}

@@ -7,3 +7,4 @@ export const graphBox: string;
 export const graphDebugger: string;
 export const library: string;
 export const attributes: string;
+export const dialogExportTextarea: string;

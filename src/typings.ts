@@ -1,3 +1,5 @@
+import * as React from 'react';
+
 export enum PortDirection {
   IN,
   OUT,
@@ -121,4 +123,20 @@ export interface LogicalJSON {
   o: LogicalJSONIONode[];
   n: LogicalJSONLogicalNode[];
   l: LogicalJSONLink[];
+}
+
+export interface DialogButtonMeta {
+  text: string;
+  close?: boolean;
+  primary?: boolean;
+  onClick?: () => void;
+}
+
+export interface DialogMeta {
+  width?: number;
+  height?: number;
+  title?: string;
+  buttons?: DialogButtonMeta[];
+  children?: React.ReactNode;
+  padding?: any;
 }

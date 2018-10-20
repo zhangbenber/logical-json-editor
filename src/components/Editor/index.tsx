@@ -11,6 +11,7 @@ import Attributes from '../Attributes';
 import Graph from '../Graph';
 import Library from '../Library';
 import ToolBar from '../ToolBar';
+import Dialog from '../Dialog';
 
 import nodeMeta from 'src/meta';
 
@@ -79,10 +80,27 @@ class App extends React.PureComponent<{
                 hasConstant = true;
               }
             });
-            result.n.push([id, n.name, hasConstant ? constant : undefined]);
+            result.n.push(hasConstant ? [id, n.name, constant] : [id, n.name]);
         }
       });
-      alert(JSON.stringify(result));
+      Dialog.show({
+        title: '导出 LogicalJSON',
+        width: 500,
+        height: 200,
+        children: <div>
+          <textarea
+            className={styles.dialogExportTextarea}
+            value={JSON.stringify(result)}
+            // readOnly
+            tabIndex={0}
+          />
+        </div>,
+        padding: '9px 8px 10px',
+        buttons: [
+          { text: '复制', primary: true, close: true },
+          { text: '关闭', close: true },
+        ]
+      });
     }
   }
 
@@ -127,6 +145,8 @@ class App extends React.PureComponent<{
   public render() {
     return (
       <div className={classnames(styles.editor, this.props.className || '')}>
+        {/* <Dialog title="test" buttons={[{text: "123"}]}/> */}
+        <Dialog.Hub />
         <ToolBar className={styles.toolbar} onButtonClick={this.handleButtonClick} />
         <div className={styles.workspace}>
           <Library
