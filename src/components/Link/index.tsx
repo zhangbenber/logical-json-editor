@@ -4,14 +4,17 @@ import * as I from '../../typings';
 import classnames from 'classnames';
 import * as styles from './style.css';
 
-export default class Link extends React.PureComponent<{
-  link: I.Link,
-  nodes: Array<I.Node | undefined>,
+interface LinkProps {
+  link: I.Link;
+  nodes: Array < I.Node | undefined >;
   mouseMovment: I.MouseMovment;
   isShadow?: boolean;
   onSelect?: (id: number, preserve: boolean) => void;
   onStartMouseMovment?: (type: I.MouseMovmentType, data?: any, stopPropagation?: boolean) => void;
-}> {
+
+}
+
+export default class Link extends React.Component<LinkProps> {
   constructor(props: any) {
     super(props);
     this.handleMouseDown = this.handleMouseDown.bind(this);
@@ -67,6 +70,29 @@ export default class Link extends React.PureComponent<{
         <path d={path} className={classnames(styles.link)} />
       </g>
     )
+  }
+
+
+  public shouldComponentUpdate(nextProps: LinkProps) {
+    const { props } = this;
+    if (
+      (nextProps.isShadow !== props.isShadow) ||
+      (nextProps.link !== props.link) ||
+      (nextProps.mouseMovment !== props.mouseMovment && (
+        ((props.mouseMovment.type === I.MouseMovmentType.CREATE_LINK ||
+          nextProps.mouseMovment.type === I.MouseMovmentType.CREATE_LINK) &&
+        nextProps.isShadow) ||
+        ((props.mouseMovment.type === I.MouseMovmentType.MOVE_NODE ||
+          nextProps.mouseMovment.type === I.MouseMovmentType.MOVE_NODE) &&
+          (
+            props.nodes[props.link.from.nodeId]!.selected ||
+            props.nodes[props.link.to.nodeId]!.selected
+          ))
+      ))
+    ) {
+      return true;
+    }
+    return false;
   }
 
   private handleMouseDown: React.MouseEventHandler = e => {

@@ -3,15 +3,18 @@ import * as I from '../../typings';
 
 import classnames from 'classnames';
 import * as styles from './style.css';
+// import { shallowEqual } from 'src/utils';
 
-export default class Node extends React.PureComponent<{
+interface NodeProps {
   id: number;
   node: I.Node;
   mouseMovment: I.MouseMovment;
   onSelect?: (id: number, preserve: boolean) => void;
   onStartMouseMovment?: (type: I.MouseMovmentType, data?: any, stopPropagation?: boolean) => void;
   onUpdateMouseMovementData?: (data?: any) => void;
-}> {
+}
+
+export default class Node extends React.Component<NodeProps> {
 
   constructor(props: any) {
     super(props);
@@ -82,6 +85,21 @@ export default class Node extends React.PureComponent<{
     );
   }
 
+  public shouldComponentUpdate(nextProps: NodeProps) {
+    const { props } = this;
+    if (
+      (nextProps.node !== props.node) ||
+      (nextProps.mouseMovment !== props.mouseMovment && (
+        (props.mouseMovment.type === I.MouseMovmentType.MOVE_NODE ||
+        nextProps.mouseMovment.type === I.MouseMovmentType.MOVE_NODE) &&
+          nextProps.node.selected
+      ))
+    ) {
+      return true;
+    }
+    return false;
+  }
+
   private renderPortItem(port: I.Port, i: number) {
     const { width } = this.props.node;
     const dir = {
@@ -148,9 +166,6 @@ export default class Node extends React.PureComponent<{
   }
 
   private handlePortMouseDown(port: I.Port, e: React.MouseEvent) {
-    // if (!this.props.node.selected && this.props.onSelect) {
-    //   this.props.onSelect(this.props.id, e.ctrlKey || e.shiftKey || e.metaKey);
-    // }
     const ref: I.PortRef = {
       nodeId: this.props.node.id,
       portName: port.name,
