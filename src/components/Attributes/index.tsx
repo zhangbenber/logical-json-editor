@@ -2,6 +2,7 @@ import * as React from 'react';
 import nodeMeta from '../../meta';
 import * as I from '../../typings';
 
+import produce from 'immer';
 import classnames from 'classnames';
 import * as styles from './style.css';
 
@@ -11,6 +12,7 @@ import Port from './Port';
 export default class Attributes extends React.PureComponent<{
   graph: I.Graph;
   className?: any;
+  onEdit?: (reducer: ((oldState: I.Graph) => I.Graph)) => void;
 }> {
   constructor(props: any) {
     super(props);
@@ -27,7 +29,7 @@ export default class Attributes extends React.PureComponent<{
 
   private renderPanel(selectedNodes: I.Node[]) {
     if (selectedNodes.length === 0) {
-      return <div className={styles.desc}><em>选中一个节点以查看节点属性。</em></div>
+      return <div className={styles.desc}><p><em>选中一个节点以查看节点属性。</em></p></div>
     } else if (selectedNodes.length > 1) {
       return <div className={styles.desc}>选中了 {selectedNodes.length} 个节点。</div>
     } else {
@@ -43,7 +45,7 @@ export default class Attributes extends React.PureComponent<{
         }
       });
       if (meta) {
-        return <div>
+        return <div className={styles.scroll}>
           <div className={styles.desc}>
             <p><strong>{meta.name} : </strong>{meta.label}</p>
             <p>{meta.desc}</p>
@@ -56,7 +58,6 @@ export default class Attributes extends React.PureComponent<{
   }
 
   private renderPorts(node: I.Node, meta: I.NodeMeta) {
-    // node.ports.map(port => div)
     return meta.portGroups.map((group, i) => <div
       className={styles.group}
       key={i}
@@ -76,11 +77,35 @@ export default class Attributes extends React.PureComponent<{
               meta={portMeta}
               port={port}
               key={port.name}
+              onChangeConstant={this.handlePortConstantChange.bind(this, node.id, port.name)}
             />
           })}
         </div>
       )}
     </div>)
+  }
+
+  private handlePortConstantChange(
+    nodeId: number,
+    portName: string,
+    constant: any,
+    constantInput?: any,
+    constantError?: boolean
+  ) {
+    console.log(constant)
+    if (this.props.onEdit) {
+      this.props.onEdit(state => produce(state, oldState => {
+        const node = oldState.nodes[nodeId];
+        if (node) {
+          const port = node.ports[node.portMap[portName]];
+          if (port) {
+            port.constant = constant;
+            port.constantInput = constantInput;
+            port.constantError = constantError;
+          }
+        }
+      }));
+    }
   }
 
 }

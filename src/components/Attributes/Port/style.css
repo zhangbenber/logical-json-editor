@@ -1,5 +1,5 @@
 .port {
-  padding: 4px 8px;
+  padding: 6px 8px 4px;
   background: #666;
   margin: 3px 0;
 }
@@ -11,9 +11,9 @@
 }
 
 .conn {
-  height: 20px;
+  height: 24px;
   display: flex;
-  line-height: 20px;
+  line-height: 24px;
 }
 .conn::before {
   display: inline-block;
@@ -24,6 +24,7 @@
   color: #aaa;
   opacity: 0.9;
   text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+  flex: none;
 }
 .conn.input::before {
   content: '\e8';
@@ -40,6 +41,61 @@
 .conn.input.constant::before {
   content: 'l';
   color: #81c784;
+}
+.conn.input.constant.error::before {
+  font-family: inherit;
+  font-weight: bolder;
+  content: '!';
+  color: #ffb74d;
+  font-size: 15px;
+}
+
+.constant-box {
+  flex: 1;
+  display: flex;
+}
+.constant-content {
+  width: 0;
+  flex: 1;
+}
+.constant-content {
+  width: 0;
+  flex: 1;
+  position: relative;
+}
+.constant-content > input[type="text"] {
+  width: 100%;
+  height: 22px;
+  margin: 1px 0;
+  border: 1px solid transparent;
+  padding: 0 4px;
+}
+.constant-content > input[type="text"]:hover {
+  background: rgba(0,0,0,.1);
+  border-color: rgba(255,255,255,.2);
+}
+.constant-content > input[type="text"]:focus {
+  background: rgba(0,0,0,.15);
+  border-color: rgba(255,255,255,.3);
+}
+.constant-clear {
+  width: 20px;
+  height: 20px;
+  margin: 2px -2px 0 2px;
+  flex: none;
+  text-align: center;
+  line-height: 18px;
+  color: #999;
+}
+.constant-clear::before {
+  content: 'x';
+}
+.constant-clear:hover {
+  background: rgba(0,0,0,.1);
+  color: #ddd;
+}
+.constant-clear:active {
+  background: rgba(0,0,0,.25);
 }
 
 .link {

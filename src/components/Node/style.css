@@ -57,6 +57,9 @@
 .port.in-port.constant {
   fill: #4f8b2f;
 }
+.port.in-port.constant.constant-error {
+  fill: #ea8300;
+}
 
 .port-text {
   fill: #333;

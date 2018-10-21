@@ -108,7 +108,7 @@ class App extends React.PureComponent<{
     super(props);
     this.graphMounted = this.graphMounted.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
-    this.handleButtonClick = this.handleButtonClick.bind(this);
+    this.handleToolBarButtonClick = this.handleToolBarButtonClick.bind(this);
 
     const graph: I.Graph = {
       nodes: [],
@@ -136,6 +136,7 @@ class App extends React.PureComponent<{
     );
 
     (graph.nodes[logical] as I.Node).ports[1].constant = 'test';
+    (graph.nodes[logical] as I.Node).ports[1].constantInput = '"test"';
 
     console.log(graph)
 
@@ -147,7 +148,7 @@ class App extends React.PureComponent<{
       <div className={classnames(styles.editor, this.props.className || '')}>
         {/* <Dialog title="test" buttons={[{text: "123"}]}/> */}
         <Dialog.Hub />
-        <ToolBar className={styles.toolbar} onButtonClick={this.handleButtonClick} />
+        <ToolBar className={styles.toolbar} onButtonClick={this.handleToolBarButtonClick} />
         <div className={styles.workspace}>
           <Library
             className={styles.library}
@@ -165,13 +166,14 @@ class App extends React.PureComponent<{
                 />
               </Palette>
             </div>
-            <div className={styles.graphDebugger}>
+            {/* <div className={styles.graphDebugger}>
               <Palette title="调试" />
-            </div>
+            </div> */}
           </div>
           <Attributes
             className={styles.attributes}
             graph={this.state.graph}
+            onEdit={this.handleEdit}
           />
         </div>
       </div>
@@ -188,7 +190,7 @@ class App extends React.PureComponent<{
     this.graph = ref;
   }
 
-  private handleButtonClick(type: string) {
+  private handleToolBarButtonClick(type: string) {
     if (this.graph) {
       this.graph.onButtonClick(type);
     }

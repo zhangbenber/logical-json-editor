@@ -13,3 +13,9 @@
   bottom: 0;
   user-select: none;
 }
+
+:global(input[type=text]) {
+  border: none;
+  background: transparent;
+  color: #fff;
+}

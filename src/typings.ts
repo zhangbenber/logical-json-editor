@@ -34,6 +34,8 @@ export interface Port {
   name: string;
   direction: PortDirection;
   constant?: any;
+  constantInput?: any;
+  constantError?: boolean;
   linkIds: number[];
 }
 

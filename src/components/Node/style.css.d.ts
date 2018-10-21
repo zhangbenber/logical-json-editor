@@ -10,6 +10,7 @@ export const inPort: string;
 export const connected: string;
 export const outPort: string;
 export const constant: string;
+export const constantError: string;
 export const portText: string;
 export const portIndicator: string;
 export const split: string;

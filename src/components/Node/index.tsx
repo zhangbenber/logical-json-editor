@@ -126,7 +126,7 @@ export default class Node extends React.Component<NodeProps> {
 
   private renderPortDot(port: I.Port, x: number, y: number) {
     const connectable = port.direction === I.PortDirection.OUT || (
-      port.constant === undefined &&
+      port.constantInput === undefined &&
       !port.linkIds.length
     );
     return {
@@ -138,7 +138,8 @@ export default class Node extends React.Component<NodeProps> {
             [styles.inPort]: port.direction === I.PortDirection.IN,
             [styles.outPort]: port.direction === I.PortDirection.OUT,
             [styles.connected]: !!port.linkIds.length,
-            [styles.constant]: port.constant !== undefined,
+            [styles.constant]: port.constantInput !== undefined,
+            [styles.constantError]: port.constantError,
           }
         )}
       />,
