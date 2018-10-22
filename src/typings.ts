@@ -68,6 +68,9 @@ export interface Dimension {
   oX: number;
   oY: number;
   scale: number;
+  width: number;
+  height: number;
+  showNavigator?: boolean;
 }
 
 export interface MouseMovment {
@@ -80,13 +83,14 @@ export interface MouseMovment {
 }
 
 export interface Sheet {
+  id: number;
   name: string;
   dimension: Dimension;
   graph: Graph;
 }
 
 export interface Document {
-  sheets: Sheet[];
+  sheets: Array<Sheet | undefined>;
 }
 
 export interface NodeCategoryMeta {

@@ -11,6 +11,7 @@ import produce from 'immer';
 import reducersOf from '../../reducers';
 
 import * as helpers from 'src/helpers';
+import NavBar from './NavBar';
 
 const nullMouseMovment: I.MouseMovment = {
   type: I.MouseMovmentType.NONE,
@@ -25,6 +26,7 @@ export default class Graph extends React.PureComponent<{
   dimension: I.Dimension,
   className?: any,
   onEdit?: (reducer: ((oldState: I.Graph) => I.Graph)) => void;
+  onUpdateDimension?: (dimension: I.Dimension) => void;
 }, {
   width: number,
   height: number,
@@ -54,69 +56,77 @@ export default class Graph extends React.PureComponent<{
     this.handleDragOver = this.handleDragOver.bind(this);
     this.handleDrop = this.handleDrop.bind(this);
     this.handleStartMouseMovment = this.handleStartMouseMovment.bind(this);
-    this.handleonUpdateMouseMovementData = this.handleonUpdateMouseMovementData.bind(this);
+    this.handleUpdateMouseMovementData = this.handleUpdateMouseMovementData.bind(this);
+    this.handleUpdateDimension = this.handleUpdateDimension.bind(this);
   }
 
   public render() {
     const { mouseMovment } = this.state;
     const { nodes, links } = this.props.graph;
     return (
-      <div
-        className={classnames(this.props.className, styles.box)}
-        ref={r => this.calcSize(r)}
-        onMouseDown={this.handleMouseDown}
-        onMouseMove={this.handleMouseMove}
-        onMouseUp={this.handleMouseUp}
-        onKeyDown={this.handleKeyDown}
-        onKeyUp={this.handleKeyUp}
-        onDragOver={this.handleDragOver}
-        onDrop={this.handleDrop}
-        tabIndex={1}
-      >
-        <svg
+      <div className={classnames(this.props.className, styles.box)}>
+        <div
           className={styles.view}
-          width={this.state.width}
-          height={this.state.height}
-          viewBox={this.calcViewBox()}
+          ref={r => this.calcSize(r)}
+          onMouseDown={this.handleMouseDown}
+          onMouseMove={this.handleMouseMove}
+          onMouseUp={this.handleMouseUp}
+          onKeyDown={this.handleKeyDown}
+          onKeyUp={this.handleKeyUp}
+          onDragOver={this.handleDragOver}
+          onDrop={this.handleDrop}
+          tabIndex={1}
         >
-          {this.renderDefs()}
-          <rect
-            x="-100"
-            y="-100"
-            width="200"
-            height="200"
-            fill="url(#grid)"
-            onMouseDown={this.handleMouseDownOnCanvas}
-          />
-          {nodes.map((node, id) => 
-            node ? <Node
-              id={id}
-              node={node}
-              key={id}
-              mouseMovment={mouseMovment}
-              onStartMouseMovment={this.handleStartMouseMovment}
-              onUpdateMouseMovementData={this.handleonUpdateMouseMovementData}
-              onSelect={this.handleSelectNode}
-            /> : null)
-          }
-          {links.map((link) =>
-            link ? <Link
-              link={link}
-              key={link.id}
+          <svg
+            className={styles.svg}
+            width={this.state.width}
+            height={this.state.height}
+            viewBox={this.calcViewBox()}
+          >
+            {this.renderDefs()}
+            <rect
+              x="-100"
+              y="-100"
+              width="200"
+              height="200"
+              fill="url(#grid)"
+              onMouseDown={this.handleMouseDownOnCanvas}
+            />
+            {nodes.map((node, id) => 
+              node ? <Node
+                id={id}
+                node={node}
+                key={id}
+                mouseMovment={mouseMovment}
+                onStartMouseMovment={this.handleStartMouseMovment}
+                onUpdateMouseMovementData={this.handleUpdateMouseMovementData}
+                onSelect={this.handleSelectNode}
+              /> : null)
+            }
+            {links.map((link) =>
+              link ? <Link
+                link={link}
+                key={link.id}
+                nodes={nodes}
+                mouseMovment={mouseMovment}
+                onStartMouseMovment={this.handleStartMouseMovment}
+                onSelect={this.handleSelectLink}
+                // onUpdateMouseMovementData={this.handleonUpdateMouseMovementData}
+              /> : null)
+            }
+            {mouseMovment.type === I.MouseMovmentType.CREATE_LINK ? <Link
+              link={mouseMovment.data}
               nodes={nodes}
               mouseMovment={mouseMovment}
-              onStartMouseMovment={this.handleStartMouseMovment}
-              onSelect={this.handleSelectLink}
-              // onUpdateMouseMovementData={this.handleonUpdateMouseMovementData}
-            /> : null)
-          }
-          {mouseMovment.type === I.MouseMovmentType.CREATE_LINK ? <Link
-            link={mouseMovment.data}
-            nodes={nodes}
-            mouseMovment={mouseMovment}
-            isShadow
-          /> : null}
-        </svg>
+              isShadow
+            /> : null}
+          </svg>
+        </div>
+        <NavBar
+          graph={this.props.graph}
+          dimension={this.props.dimension}
+          onUpdateDimension={this.handleUpdateDimension}
+        />
       </div>
     );
   }
@@ -134,6 +144,7 @@ export default class Graph extends React.PureComponent<{
   }
 
   private calcSize(ele: HTMLDivElement | null) {
+    const { dimension } = this.props;
     if (ele === this.box) {
       return;
     }
@@ -141,10 +152,17 @@ export default class Graph extends React.PureComponent<{
       this.box = ele;
     }
     if (this.box) {
+      const width = this.box.clientWidth;
+      const height = this.box.clientHeight;
       this.setState({
-        width: this.box.clientWidth,
-        height: this.box.clientHeight,
+        width, height
       });
+      if ((dimension.width !== width || dimension.height !== height) && this.props.onUpdateDimension) {
+        this.props.onUpdateDimension({
+          ...dimension,
+          width, height
+        });
+      }
     }
   }
 
@@ -156,9 +174,9 @@ export default class Graph extends React.PureComponent<{
     } ${
       -dimension.oY / dimension.scale
     } ${
-      (width - dimension.oX) / dimension.scale
+      width / dimension.scale
     } ${
-      (height - dimension.oY) / dimension.scale
+      height / dimension.scale
     }`
   }
 
@@ -281,10 +299,16 @@ export default class Graph extends React.PureComponent<{
     this.nextMouseMovmentHandleStopped = !!stopPropagation;
   }
 
-  private handleonUpdateMouseMovementData(data?: any) {
+  private handleUpdateMouseMovementData(data?: any) {
     this.setState({
       mouseMovment: { ...this.state.mouseMovment, data }
     });
+  }
+
+  private handleUpdateDimension(dimension: I.Dimension) {
+    if (this.props.onUpdateDimension) {
+      this.props.onUpdateDimension(dimension);
+    }
   }
 
   private apply(producer: (oldState: I.Graph) => any) {

@@ -15,12 +15,6 @@ import Dialog from '../Dialog';
 
 import nodeMeta from 'src/meta';
 
-const dimension: I.Dimension = {
-  oX: 0,
-  oY: 0,
-  scale: 25,
-}
-
 class App extends React.PureComponent<{
   className?: any;
 }> {
@@ -28,7 +22,14 @@ class App extends React.PureComponent<{
     graph: {
       nodes: [],
       links: [],
-    } as I.Graph
+    } as I.Graph,
+    dimension: {
+      oX: 0,
+      oY: 0,
+      scale: 25,
+      width: 0,
+      height: 0,
+    } as I.Dimension,
   }
 
   private graph: Graph | null;
@@ -109,6 +110,7 @@ class App extends React.PureComponent<{
     this.graphMounted = this.graphMounted.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.handleToolBarButtonClick = this.handleToolBarButtonClick.bind(this);
+    this.handleUpdateDimension = this.handleUpdateDimension.bind(this);
 
     const graph: I.Graph = {
       nodes: [],
@@ -140,7 +142,7 @@ class App extends React.PureComponent<{
 
     console.log(graph)
 
-    this.state = { graph };
+    this.state.graph = graph;
   }
 
   public render() {
@@ -161,14 +163,15 @@ class App extends React.PureComponent<{
                   className={styles.graphBox}
                   graph={this.state.graph}
                   onEdit={this.handleEdit}
-                  dimension={dimension}
+                  dimension={this.state.dimension}
+                  onUpdateDimension={this.handleUpdateDimension}
                   ref={this.graphMounted}
                 />
               </Palette>
             </div>
-            {/* <div className={styles.graphDebugger}>
+            <div className={styles.graphDebugger}>
               <Palette title="调试" />
-            </div> */}
+            </div>
           </div>
           <Attributes
             className={styles.attributes}
@@ -184,6 +187,10 @@ class App extends React.PureComponent<{
     this.setState({
       graph: reducer(this.state.graph)
     });
+  }
+
+  private handleUpdateDimension(dimension: I.Dimension) {
+    this.setState({ dimension });
   }
 
   private graphMounted(ref: Graph | null) {

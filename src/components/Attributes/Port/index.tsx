@@ -62,13 +62,19 @@ export default class AttributesPort extends React.PureComponent<{
     </div>
   }
 
+  public componentWillUnmount() {
+    if (this.state.constantInput !== this.props.port.constantInput) {
+      this.handleConstantCommit();
+    }
+  }
+
   private renderConstant(type: I.PortType) {
     const value = this.state.constantInput;
     switch (type) {
       case I.PortType.STRING:
-        return <input type="text" value={value} onChange={this.handleConstantInputChange} onKeyDown={this.handleConstantKeyDown} onBlur={this.handleConstantCommit} ref={this.constnatInputMounted} />;
+        return <input type="text" value={value} onChange={this.handleConstantInputChange} onKeyDown={this.handleConstantKeyDown} onBlur={this.handleConstantCommit} ref={this.constnatInputMounted} placeholder="请输入 JSON 字符串" />;
       default:
-        return <input type="text" value={value} onChange={this.handleConstantInputChange} onKeyDown={this.handleConstantKeyDown} onBlur={this.handleConstantCommit} ref={this.constnatInputMounted} />;
+        return <input type="text" value={value} onChange={this.handleConstantInputChange} onKeyDown={this.handleConstantKeyDown} onBlur={this.handleConstantCommit} ref={this.constnatInputMounted} placeholder="请输入 JSON 字符串" />;
     }
   }
 
