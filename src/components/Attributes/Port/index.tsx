@@ -105,6 +105,9 @@ export default class AttributesPort extends React.PureComponent<{
   }
 
   private handleDisableConstant() {
+    this.setState({
+      constantInput: undefined,
+    });
     if (this.props.onChangeConstant) {
       this.props.onChangeConstant(undefined, undefined, undefined);
     }
