@@ -6,3 +6,4 @@ export const desc: string;
 export const port: string;
 export const input: string;
 export const output: string;
+export const mul: string;

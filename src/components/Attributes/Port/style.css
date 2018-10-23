@@ -20,17 +20,18 @@
   width: 16px;
   margin: 1px 4px 0 0;
   text-align: center;
-  font-family: Wingdings;
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
   color: #aaa;
   opacity: 0.9;
   text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
   flex: none;
 }
 .conn.input::before {
-  content: '\e8';
+  content: '\f138';
 }
 .conn.output::before {
-  content: '\e7';
+  content: '\f137';
 }
 .conn.input.connected::before {
   color: #64B5F6;
@@ -39,15 +40,12 @@
   color: #E57373;
 }
 .conn.input.constant::before {
-  content: 'l';
+  content: '\f192';
   color: #81c784;
 }
 .conn.input.constant.error::before {
-  font-family: inherit;
-  font-weight: bolder;
-  content: '!';
+  content: '\f06a';
   color: #ffb74d;
-  font-size: 15px;
 }
 
 .constant-box {

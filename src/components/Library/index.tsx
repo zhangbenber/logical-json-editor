@@ -64,9 +64,10 @@ export default class Library extends React.PureComponent<{
          group.ports.map((port, j) =>
           <p key={`${port.direction}${port.name}`} className={classnames(
             styles.port,
-            port.direction === I.PortDirection.IN ? styles.input : styles.output
+            port.direction === I.PortDirection.IN ? styles.input : styles.output,
+            { [styles.mul]: group.extendable }
           )}>
-            <strong>{port.name}{group.extendable ? '[]' : ''} : </strong>{port.desc}
+            <strong>{port.name} : </strong>{port.desc}
           </p> 
          )
       )}

@@ -33,12 +33,15 @@
   color: #ccc;
 }
 .tab::after {
-  font-family: Webdings;
-  font-size: 10px;
-  content: 'r';
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-size: 8px;
+  content: '\f00d';
   opacity: 0.3;
   position: absolute;
-  right: 6px;
+  right: 4px;
+  width: 12px;
+  text-align: center;
   top: 1px;
 }
 .tab:hover {

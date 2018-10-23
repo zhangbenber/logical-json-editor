@@ -4,42 +4,35 @@
   width: 26px;
   vertical-align: middle;
   border-radius: 2px;
-  font-size: 16px;
+  font-size: 14px;
   text-align: center;
   line-height: 26px;
   margin: 0 1px;
-  font-weight: bold;
   color: #ccc;
+  composes: fas from '@fortawesome/fontawesome-free/css/all.css';
 }
 .button:hover {
-  background: #4c4c4c;
+  background: #535353;
+  border: 1px solid #444;
+  line-height: 24px;
   color: #eee;
 }
 .button:active {
-  background: #444;
   border: 1px solid #333;
   line-height: 24px;
+  background: #444;
 }
 
-.new::before {
-  font-family: Wingdings;
-  content: '2';
+.new {
+  composes: fa-file from '@fortawesome/fontawesome-free/css/all.css';
+}
+.open {
+  composes: fa-folder-open from '@fortawesome/fontawesome-free/css/all.css';
+}
+.save {
+  composes: fa-save from '@fortawesome/fontawesome-free/css/all.css';
 }
 
-.open::before {
-  font-family: Wingdings;
-  content: '1';
-  font-size: 85%;
-  vertical-align: 1px;
-}
-
-.save::before {
-  font-family: Wingdings;
-  content: '<';
-}
-
-.code::before {
-  font-size: 10px;
-  content: '{ }';
-  vertical-align: 5px;
+.code {
+  composes: fa-code from '@fortawesome/fontawesome-free/css/all.css';
 }
