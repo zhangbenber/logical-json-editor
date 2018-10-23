@@ -21,6 +21,7 @@ export enum PortType {
 
 export enum MouseMovmentType {
   NONE,
+  GRAB,
   MOVE_NODE,
   CREATE_LINK,
 }

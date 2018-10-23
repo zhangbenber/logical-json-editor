@@ -108,6 +108,7 @@ class App extends React.PureComponent<{
   constructor(props: any) {
     super(props);
     this.graphMounted = this.graphMounted.bind(this);
+    this.handleBlur = this.handleBlur.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.handleToolBarButtonClick = this.handleToolBarButtonClick.bind(this);
     this.handleUpdateDimension = this.handleUpdateDimension.bind(this);
@@ -147,7 +148,10 @@ class App extends React.PureComponent<{
 
   public render() {
     return (
-      <div className={classnames(styles.editor, this.props.className || '')}>
+      <div
+        className={classnames(styles.editor, this.props.className || '')}
+        onBlur={this.handleBlur}
+      >
         {/* <Dialog title="test" buttons={[{text: "123"}]}/> */}
         <Dialog.Hub />
         <ToolBar className={styles.toolbar} onButtonClick={this.handleToolBarButtonClick} />
@@ -183,10 +187,28 @@ class App extends React.PureComponent<{
     );
   }
 
+  private handleBlur() {
+    // Promise.resolve().then(() => {
+    setTimeout(() => {
+      console.log(document.activeElement)
+      if (!document.activeElement || document.activeElement === document.body) {
+        this.focusOnGraph();
+      }
+    }, 0);
+  }
+
+  private focusOnGraph() {
+    const graphBox = this.graph && this.graph.getBox();
+    if (graphBox) {
+      graphBox.focus();
+    }
+  }
+
   private handleEdit(reducer: ((oldState: I.Graph) => I.Graph)) {
     this.setState({
       graph: reducer(this.state.graph)
     });
+    this.focusOnGraph();
   }
 
   private handleUpdateDimension(dimension: I.Dimension) {

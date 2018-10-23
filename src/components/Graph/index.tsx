@@ -30,12 +30,14 @@ export default class Graph extends React.PureComponent<{
 }, {
   width: number,
   height: number,
-  mouseMovment: I.MouseMovment
+  mouseMovment: I.MouseMovment,
+  grabbing: boolean;
 }> {
   public state = {
     width: 0,
     height: 0,
-    mouseMovment: nullMouseMovment
+    mouseMovment: nullMouseMovment,
+    grabbing: false,
   }
 
   private box: HTMLDivElement | null = null;
@@ -45,6 +47,7 @@ export default class Graph extends React.PureComponent<{
 
   constructor(props: any) {
     super(props);
+    this.viewMounted = this.viewMounted.bind(this);
     this.handleSelectNode = this.handleSelectNode.bind(this);
     this.handleSelectLink = this.handleSelectLink.bind(this);
     this.handleMouseDown = this.handleMouseDown.bind(this);
@@ -66,8 +69,8 @@ export default class Graph extends React.PureComponent<{
     return (
       <div className={classnames(this.props.className, styles.box)}>
         <div
-          className={styles.view}
-          ref={r => this.calcSize(r)}
+          className={classnames(styles.view, { [styles.grab]: this.state.grabbing })}
+          ref={this.viewMounted}
           onMouseDown={this.handleMouseDown}
           onMouseMove={this.handleMouseMove}
           onMouseUp={this.handleMouseUp}
@@ -82,6 +85,7 @@ export default class Graph extends React.PureComponent<{
             width={this.state.width}
             height={this.state.height}
             viewBox={this.calcViewBox()}
+
           >
             {this.renderDefs()}
             <rect
@@ -135,12 +139,20 @@ export default class Graph extends React.PureComponent<{
     console.log(type);
   }
 
+  public getBox() {
+    return this.box;
+  }
+
   private renderDefs() {
     return <defs>
       <pattern id="grid" width="1" height="1" patternUnits="userSpaceOnUse">
         <rect x="0" y="0" width="1.1" height="1.1" className={styles.grid} />
       </pattern>
     </defs >
+  }
+  
+  private viewMounted(ele: HTMLDivElement | null) {
+    this.calcSize(ele);
   }
 
   private calcSize(ele: HTMLDivElement | null) {
@@ -168,11 +180,17 @@ export default class Graph extends React.PureComponent<{
 
   private calcViewBox() {
     const { dimension } = this.props;
-    const { width, height } = this.state;
+    const { width, height, mouseMovment } = this.state;
+    let x = dimension.oX;
+    let y = dimension.oY;
+    if (mouseMovment.type === I.MouseMovmentType.GRAB) {
+      x += (mouseMovment.x - mouseMovment.startX) * dimension.scale;
+      y += (mouseMovment.y - mouseMovment.startY) * dimension.scale;
+    }
     return `${
-      -dimension.oX / dimension.scale
+      -x / dimension.scale
     } ${
-      -dimension.oY / dimension.scale
+      -y / dimension.scale
     } ${
       width / dimension.scale
     } ${
@@ -208,6 +226,9 @@ export default class Graph extends React.PureComponent<{
   }
 
   private handleMouseDown: React.MouseEventHandler = e => {
+    if (this.state.grabbing) {
+      this.handleStartMouseMovment(I.MouseMovmentType.GRAB);
+    }
     const cords = this.getMouseCords(e);
     this.setState({
       mouseMovment: Object.assign({
@@ -220,10 +241,11 @@ export default class Graph extends React.PureComponent<{
   }
 
   private handleMouseMove: React.MouseEventHandler = e => {
-    if (this.state.mouseMovment.type !== I.MouseMovmentType.NONE) {
+    const { mouseMovment } = this.state;
+    if (mouseMovment.type !== I.MouseMovmentType.NONE) {
       const cords = this.getMouseCords(e);
       this.setState({
-        mouseMovment: Object.assign({}, this.state.mouseMovment, cords)
+        mouseMovment: Object.assign({}, mouseMovment, cords)
       });
     }
   }
@@ -232,6 +254,20 @@ export default class Graph extends React.PureComponent<{
     const { mouseMovment } = this.state;
     const { data } = mouseMovment;
     switch (mouseMovment.type) {
+
+      case I.MouseMovmentType.GRAB:
+        if (this.props.onUpdateDimension) {
+          const { dimension } = this.props;
+          const { x, y, startX, startY } = mouseMovment;
+          const { oX, oY } = dimension;
+          this.props.onUpdateDimension({
+            ...dimension,
+            oX: oX + (x - startX) * dimension.scale,
+            oY: oY + (y - startY) * dimension.scale,
+          });
+        }
+        break;
+
       case I.MouseMovmentType.MOVE_NODE:
         this.apply(state => {
           state.nodes.forEach(node => {
@@ -239,7 +275,7 @@ export default class Graph extends React.PureComponent<{
               node.x = Math.round(node.x + mouseMovment.x - mouseMovment.startX);
               node.y = Math.round(node.y + mouseMovment.y - mouseMovment.startY);
             }
-          })
+          });
         });
         break;
 
@@ -262,6 +298,12 @@ export default class Graph extends React.PureComponent<{
   private handleKeyDown: React.KeyboardEventHandler = e => {
     console.log(e.keyCode);
     switch (e.keyCode) {
+      case 32:
+        e.preventDefault();
+        this.setState({
+          grabbing: true
+        });
+        break;
       case 8:
       case 46:
         e.preventDefault();
@@ -271,7 +313,14 @@ export default class Graph extends React.PureComponent<{
   }
 
   private handleKeyUp: React.KeyboardEventHandler = e => {
-    console.log(e.keyCode)
+    switch (e.keyCode) {
+      case 32:
+        e.preventDefault();
+        this.setState({
+          grabbing: false
+        });
+        break;
+    }
   }
 
   private handleDragOver: React.DragEventHandler = e => {

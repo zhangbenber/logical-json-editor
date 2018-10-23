@@ -10,8 +10,18 @@
   bottom: 0;
 }
 
+.grab {
+  cursor: grab;
+}
+.grab:active {
+  cursor: grabbing;
+}
+
 .svg {
   background: #808080;
+}
+.grab .svg {
+  pointer-events: none;
 }
 
 .grid {
