@@ -44,6 +44,7 @@ export default class Graph extends React.PureComponent<{
   private nextMouseMovmentType: I.MouseMovmentType = I.MouseMovmentType.NONE;
   private nextMouseMovmentData?: any;
   private nextMouseMovmentHandleStopped: boolean = false;
+  private dimensionChecker?: number;
 
   constructor(props: any) {
     super(props);
@@ -74,6 +75,7 @@ export default class Graph extends React.PureComponent<{
           onMouseDown={this.handleMouseDown}
           onMouseMove={this.handleMouseMove}
           onMouseUp={this.handleMouseUp}
+          onMouseLeave={this.handleMouseUp}
           onKeyDown={this.handleKeyDown}
           onKeyUp={this.handleKeyUp}
           onDragOver={this.handleDragOver}
@@ -89,10 +91,10 @@ export default class Graph extends React.PureComponent<{
           >
             {this.renderDefs()}
             <rect
-              x="-100"
-              y="-100"
-              width="200"
-              height="200"
+              x={-(this.props.dimension.oX + this.state.width) / this.props.dimension.scale}
+              y={-(this.props.dimension.oY + this.state.height) / this.props.dimension.scale}
+              width={3 * this.state.width / this.props.dimension.scale}
+              height={3 * this.state.height / this.props.dimension.scale}
               fill="url(#grid)"
               onMouseDown={this.handleMouseDownOnCanvas}
             />
@@ -153,9 +155,12 @@ export default class Graph extends React.PureComponent<{
   
   private viewMounted(ele: HTMLDivElement | null) {
     this.calcSize(ele);
+    if (ele) {
+      ele.focus();
+    }
   }
 
-  private calcSize(ele: HTMLDivElement | null) {
+  private calcSize(ele?: HTMLDivElement | null) {
     const { dimension } = this.props;
     if (ele === this.box) {
       return;
@@ -164,6 +169,11 @@ export default class Graph extends React.PureComponent<{
       this.box = ele;
     }
     if (this.box) {
+      if (!this.dimensionChecker) {
+        this.dimensionChecker = window.setInterval(() => {
+          this.calcSize();
+        }, 200);
+      }
       const width = this.box.clientWidth;
       const height = this.box.clientHeight;
       this.setState({
@@ -174,6 +184,11 @@ export default class Graph extends React.PureComponent<{
           ...dimension,
           width, height
         });
+      }
+    } else {
+      if (this.dimensionChecker) {
+        clearInterval(this.dimensionChecker)
+        this.dimensionChecker = undefined;
       }
     }
   }

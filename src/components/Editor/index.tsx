@@ -188,8 +188,7 @@ class App extends React.PureComponent<{
   }
 
   private handleBlur() {
-    // Promise.resolve().then(() => {
-    setTimeout(() => {
+    window.setTimeout(() => {
       console.log(document.activeElement)
       if (!document.activeElement || document.activeElement === document.body) {
         this.focusOnGraph();
