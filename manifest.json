@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "LogicalJSON Editor",
+  "name": "LogicalJSON Graphic Editor",
   "icons": [
     {
       "src": "favicon.ico",
