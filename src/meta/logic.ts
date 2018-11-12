@@ -86,6 +86,27 @@ const logicNodeMeta: I.NodeCategoryMeta = {
         }
       ]
     },
+    
+    {
+      type: I.NodeType.LOGICAL,
+      name: 'empty',
+      label: '判空',
+      desc: '判断输入值是否为空值（空字符串、空数组或空对象）。',
+      portGroups: [
+        {
+          extendable: false,
+          ports: [
+            { name: 'in', direction: I.PortDirection.IN, type: I.PortType.ANY, desc: '输入值' },
+          ]
+        },
+        {
+          extendable: false,
+          ports: [
+            { name: 'out', direction: I.PortDirection.OUT, type: I.PortType.ANY, desc: '输出值，表示是否为空' },
+          ]
+        }
+      ]
+    },
 
   ],
 };

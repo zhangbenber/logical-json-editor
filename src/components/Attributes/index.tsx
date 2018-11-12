@@ -13,9 +13,15 @@ export default class Attributes extends React.PureComponent<{
   graph: I.Graph;
   className?: any;
   onEdit?: (reducer: ((oldState: I.Graph) => I.Graph)) => void;
+}, {
+  ioNameInput?: string;
 }> {
   constructor(props: any) {
     super(props);
+    this.handleIONameCommit = this.handleIONameCommit.bind(this);
+    this.state = {
+      ioNameInput: undefined as (string | undefined)
+    };
   }
   
   public render() {
@@ -35,8 +41,14 @@ export default class Attributes extends React.PureComponent<{
     } else {
       const node = selectedNodes[0];
       let meta: I.NodeMeta = {} as I.NodeMeta;
+      let name = node.name;
+      if (node.type === I.NodeType.INPUT) {
+        name = 'input';
+      } else if (node.type === I.NodeType.OUTPUT) {
+        name = 'output';
+      }
       nodeMeta.find(category => {
-        const foundNode: I.NodeMeta | undefined = category.nodes.find(node2 => node2.name === node.name);
+        const foundNode: I.NodeMeta | undefined = category.nodes.find(node2 => node2.name === name);
         if (foundNode) {
           meta = foundNode;
           return true;
@@ -50,6 +62,18 @@ export default class Attributes extends React.PureComponent<{
             <p><strong>{meta.name} : </strong>{meta.label}</p>
             <p>{meta.desc}</p>
           </div>
+          {node.type !== I.NodeType.LOGICAL ?
+            <div className={styles.ioName}>
+              <span>端口名称</span>
+              <input
+                type="text"
+                value={this.state.ioNameInput !== undefined ? this.state.ioNameInput : selectedNodes[0].name}
+                onChange={this.handleIONameChange}
+                onKeyDown={this.handleIONameKeyDown}
+                onBlur={this.handleIONameCommit}
+              />
+            </div>
+          : null}
           {this.renderPorts(node, meta)}
         </div>
       }
@@ -57,7 +81,39 @@ export default class Attributes extends React.PureComponent<{
     return '未知节点。';
   }
 
+  private handleIONameChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    this.setState({
+      ioNameInput: e.currentTarget.value
+    });
+  }
+
+  private handleIONameCommit() {
+    if (this.props.onEdit) {
+      this.props.onEdit(state => produce(state, oldState => {
+        const selectedNodes = oldState.nodes.filter(node => !!node && node.selected) as I.Node[];
+        if (selectedNodes[0] && this.state.ioNameInput) {
+          selectedNodes[0].name = this.state.ioNameInput;
+        }
+      }));
+    }
+    console.log(this.state.ioNameInput);
+    this.setState({
+      ioNameInput: undefined
+    });
+  }
+
+  private handleIONameKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
+    if (e.keyCode === 13) {
+      e.preventDefault();
+      this.setState({
+        ioNameInput: e.currentTarget.value
+      });
+      e.currentTarget.blur();
+    }
+  }
+  
   private renderPorts(node: I.Node, meta: I.NodeMeta) {
+    console.log(node, meta);
     return meta.portGroups.map((group, i) => <div
       className={styles.group}
       key={i}

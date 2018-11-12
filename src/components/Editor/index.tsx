@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import classnames from 'classnames';
-import * as helpers from '../../helpers';
+// import * as helpers from '../../helpers';
 import * as I from '../../typings';
 
 import * as styles from './style.css';
@@ -118,30 +118,26 @@ class App extends React.PureComponent<{
       links: [],
     };
 
-    const input = helpers.createNode(graph, nodeMeta[0].nodes[0], 2, 3);
-    const output = helpers.createNode(graph, nodeMeta[0].nodes[1], 20, 5);
-    const logical = helpers.createNode(graph, nodeMeta[1].nodes[1], 10, 8);
+    // const input = helpers.createNode(graph, nodeMeta[0].nodes[0], 2, 3);
+    // const output = helpers.createNode(graph, nodeMeta[0].nodes[1], 20, 5);
+    // const logical = helpers.createNode(graph, nodeMeta[1].nodes[1], 10, 8);
 
-    // helpers.moveNode(graph.nodes[input] as I.Node, 8, 4, 4);
-    // helpers.moveNode(graph.nodes[output] as I.Node, 12, 8, 5);
-    // helpers.moveNode(graph.nodes[logical] as I.Node, 3, 7);
+    // helpers.createLink(
+    //   graph,
+    //   { nodeId: input, portName: 'out' },
+    //   { nodeId: logical, portName: 'in.1' }
+    // );
 
-    helpers.createLink(
-      graph,
-      { nodeId: input, portName: 'out' },
-      { nodeId: logical, portName: 'in.1' }
-    );
+    // helpers.createLink(
+    //   graph,
+    //   { nodeId: logical, portName: 'out' },
+    //   { nodeId: output, portName: 'in' }
+    // );
 
-    helpers.createLink(
-      graph,
-      { nodeId: logical, portName: 'out' },
-      { nodeId: output, portName: 'in' }
-    );
+    // (graph.nodes[logical] as I.Node).ports[1].constant = 'test';
+    // (graph.nodes[logical] as I.Node).ports[1].constantInput = '"test"';
 
-    (graph.nodes[logical] as I.Node).ports[1].constant = 'test';
-    (graph.nodes[logical] as I.Node).ports[1].constantInput = '"test"';
-
-    console.log(graph)
+    // console.log(graph)
 
     this.state.graph = graph;
   }

@@ -10,6 +10,33 @@
   margin: 4px 0;
 }
 
+.io-name {
+  padding: 0 8px;
+  margin: -2px 0 6px;
+  display: flex;
+  line-height: 22px;
+  height: 26px;
+}
+.io-name span {
+  flex: none;
+  margin-right: 4px;
+}
+.io-name input[type="text"] {
+  width: 0;
+  flex: 1;
+  height: 22px;
+  border: 1px solid transparent;
+  padding: 0 4px;
+}
+.io-name input:hover {
+  background: rgba(0,0,0,.1);
+  border-color: rgba(255,255,255,.2);
+}
+.io-name input:focus {
+  background: rgba(0,0,0,.15);
+  border-color: rgba(255,255,255,.3);
+}
+
 .scroll {
   position: absolute;
   left: 0;
