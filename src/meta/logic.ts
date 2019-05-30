@@ -65,6 +65,29 @@ const logicNodeMeta: I.NodeCategoryMeta = {
     
     {
       type: I.NodeType.LOGICAL,
+      name: 'eq',
+      label: '相等',
+      desc: '判断两个或多个值是否两两相等。',
+      portGroups: [
+        {
+          extendable: true,
+          defaultPairs: 2,
+          ports: [
+            { name: 'in', direction: I.PortDirection.IN, type: I.PortType.ANY, desc: '输入值' },
+          ]
+        },
+        {
+          extendable: false,
+          ports: [
+            { name: 'strict', direction: I.PortDirection.IN, type: I.PortType.BOOLEAN, desc: '是否严格匹配（类型与值均相同）' },
+            { name: 'out', direction: I.PortDirection.OUT, type: I.PortType.BOOLEAN, desc: '输出值，表示输入是否两两相等' },
+          ]
+        }
+      ]
+    },
+
+    {
+      type: I.NodeType.LOGICAL,
       name: 'if',
       label: '判断',
       desc: '输入若干个值，依次判断一系列条件是否为真，输出与第一个真值条件所对应的值。',
@@ -107,7 +130,7 @@ const logicNodeMeta: I.NodeCategoryMeta = {
         }
       ]
     },
-
+    
   ],
 };
 
